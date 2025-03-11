@@ -1,0 +1,46 @@
+const express = require('express');
+const router = express.Router();
+const car = require('../../models/car/car');
+
+router.post('/', async (req, res) => {
+    try {
+        const cars = new car(req.body);
+        await cars.save();
+        res.status(201).json(cars);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+router.get('/', async (req, res) => {
+    try {
+        const cars = await car.find()
+        .populate('cartypes')      
+        .populate('enginetypes')    
+        .populate('sizetypes')      
+        .populate('weighttypes')   
+        res.json(cars);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    try {
+        const car = await car.findByIdAndUpdate(req.params.id,
+        req.body, { new: true });
+        res.json(car);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+    // Supprimer un article
+router.delete('/:id', async (req, res) => {
+    try {
+        await car.findByIdAndDelete(req.params.id);
+        res.json({ message: "Car tyoe delete " });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+module.exports = router;
