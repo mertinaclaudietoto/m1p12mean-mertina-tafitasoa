@@ -77,21 +77,12 @@ const DEFAULTDATA = [
           { _id: new Types.ObjectId("000000000000000000000006"), name: "Réparation de carrosserie" }
       ]
   },
-  // {
-  //   model: servicePrice, 
-  //   data: [
-  //       { _id: new Types.ObjectId("000000000000000000000001"),service:new Types.ObjectId("000000000000000000000001") },
-  //       { _id: new Types.ObjectId("000000000000000000000002"), name: "Réparation de freins" },
-  //       { _id: new Types.ObjectId("000000000000000000000003"), name: "Changement de pneus" },
-  //       { _id: new Types.ObjectId("000000000000000000000004"), name: "Diagnostic électronique" },
-  //       { _id: new Types.ObjectId("000000000000000000000005"), name: "Entretien du moteur" },
-  //       { _id: new Types.ObjectId("000000000000000000000006"), name: "Réparation de carrosserie" }
-  //   ]
-  // },
+  
   { 
     model: car, 
     data: [
       {
+        _id: new Types.ObjectId("000000000000000000000001"),
         picture: "https://example.com/image1.jpg",
         brand: "Toyota",
         model: "Corolla",
@@ -104,6 +95,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000002"),
         picture: "https://example.com/image2.jpg",
         brand: "Ford",
         model: "Focus",
@@ -116,6 +108,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000003"),
         picture: "https://example.com/image3.jpg",
         brand: "BMW",
         model: "X5",
@@ -128,6 +121,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000004"),
         picture: "https://example.com/image4.jpg",
         brand: "Mercedes",
         model: "A-Class",
@@ -140,6 +134,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000010"),
         picture: "https://example.com/image5.jpg",
         brand: "Audi",
         model: "A6",
@@ -152,6 +147,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000005"),
         picture: "https://example.com/image6.jpg",
         brand: "Nissan",
         model: "Leaf",
@@ -164,6 +160,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000006"),
         picture: "https://example.com/image7.jpg",
         brand: "Chevrolet",
         model: "Camaro",
@@ -176,6 +173,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000007"),
         picture: "https://example.com/image8.jpg",
         brand: "Volkswagen",
         model: "Golf",
@@ -188,6 +186,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000008"),
         picture: "https://example.com/image9.jpg",
         brand: "Porsche",
         model: "911",
@@ -200,6 +199,7 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
       },
       {
+        _id: new Types.ObjectId("000000000000000000000009"),
         picture: "https://example.com/image10.jpg",
         brand: "Ferrari",
         model: "488 GTB",
@@ -212,6 +212,164 @@ const DEFAULTDATA = [
         weightType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
       }
     ] 
+  },{
+    model: servicePrice, 
+    data: [
+        { _id: new Types.ObjectId("000000000000000000000001"),price:10000, car:new Types.ObjectId("000000000000000000000001"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000002"),price:15000, car:new Types.ObjectId("000000000000000000000002"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000003"),price:10000, car:new Types.ObjectId("000000000000000000000003"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000004"),price:15000, car:new Types.ObjectId("000000000000000000000004"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000005"),price:20000, car:new Types.ObjectId("000000000000000000000005"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000006"),price:15000, car:new Types.ObjectId("000000000000000000000006"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000007"),price:20000, car:new Types.ObjectId("000000000000000000000007"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000008"),price:20000, car:new Types.ObjectId("000000000000000000000008"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000009"),price:15000, car:new Types.ObjectId("000000000000000000000009"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+        { _id: new Types.ObjectId("000000000000000000000010"),price:20000, car:new Types.ObjectId("000000000000000000000010"),
+          service:new Types.ObjectId("000000000000000000000001")
+        },
+//   
+        { _id: new Types.ObjectId("000000000000000000000011"),price:10000, car:new Types.ObjectId("000000000000000000000001"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000012"),price:15000, car:new Types.ObjectId("000000000000000000000002"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000013"),price:10000, car:new Types.ObjectId("000000000000000000000003"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000014"),price:15000, car:new Types.ObjectId("000000000000000000000004"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000015"),price:20000, car:new Types.ObjectId("000000000000000000000005"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000016"),price:15000, car:new Types.ObjectId("000000000000000000000006"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000017"),price:20000, car:new Types.ObjectId("000000000000000000000007"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000018"),price:20000, car:new Types.ObjectId("000000000000000000000008"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000019"),price:15000, car:new Types.ObjectId("000000000000000000000009"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+        { _id: new Types.ObjectId("000000000000000000000020"),price:20000, car:new Types.ObjectId("000000000000000000000010"),
+          service:new Types.ObjectId("000000000000000000000002")
+        },
+// 3
+        { _id: new Types.ObjectId("000000000000000000000021"),price:10000, car:new Types.ObjectId("000000000000000000000001"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000022"),price:15000, car:new Types.ObjectId("000000000000000000000002"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000023"),price:10000, car:new Types.ObjectId("000000000000000000000003"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000024"),price:15000, car:new Types.ObjectId("000000000000000000000004"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000025"),price:20000, car:new Types.ObjectId("000000000000000000000005"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000026"),price:15000, car:new Types.ObjectId("000000000000000000000006"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000027"),price:20000, car:new Types.ObjectId("000000000000000000000007"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000028"),price:20000, car:new Types.ObjectId("000000000000000000000008"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000029"),price:15000, car:new Types.ObjectId("000000000000000000000009"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+        { _id: new Types.ObjectId("000000000000000000000030"),price:20000, car:new Types.ObjectId("000000000000000000000010"),
+          service:new Types.ObjectId("000000000000000000000003")
+        },
+// 4 
+        { _id: new Types.ObjectId("000000000000000000000031"),price:10000, car:new Types.ObjectId("000000000000000000000001"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000032"),price:15000, car:new Types.ObjectId("000000000000000000000002"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000033"),price:10000, car:new Types.ObjectId("000000000000000000000003"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000034"),price:15000, car:new Types.ObjectId("000000000000000000000004"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000035"),price:20000, car:new Types.ObjectId("000000000000000000000005"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000036"),price:15000, car:new Types.ObjectId("000000000000000000000006"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000037"),price:20000, car:new Types.ObjectId("000000000000000000000007"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000038"),price:20000, car:new Types.ObjectId("000000000000000000000008"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000039"),price:15000, car:new Types.ObjectId("000000000000000000000009"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+        { _id: new Types.ObjectId("000000000000000000000040"),price:20000, car:new Types.ObjectId("000000000000000000000010"),
+          service:new Types.ObjectId("000000000000000000000004")
+        },
+// 5
+        { _id: new Types.ObjectId("000000000000000000000041"),price:10000, car:new Types.ObjectId("000000000000000000000001"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000042"),price:15000, car:new Types.ObjectId("000000000000000000000002"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000043"),price:10000, car:new Types.ObjectId("000000000000000000000003"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000044"),price:15000, car:new Types.ObjectId("000000000000000000000004"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000045"),price:20000, car:new Types.ObjectId("000000000000000000000005"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000046"),price:15000, car:new Types.ObjectId("000000000000000000000006"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000047"),price:20000, car:new Types.ObjectId("000000000000000000000007"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000048"),price:20000, car:new Types.ObjectId("000000000000000000000008"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000049"),price:15000, car:new Types.ObjectId("000000000000000000000009"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+        { _id: new Types.ObjectId("000000000000000000000050"),price:20000, car:new Types.ObjectId("000000000000000000000010"),
+          service:new Types.ObjectId("000000000000000000000005")
+        },
+    ]
   }
 ];
 

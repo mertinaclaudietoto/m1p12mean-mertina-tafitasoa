@@ -10,5 +10,5 @@ const ServicePriceSchema = new mongoose.Schema({
   service:{ type: mongoose.Schema.Types.ObjectId, ref: 'Service', required: true },
 });
 
-const  ServicePrice= mongoose.model('serviceprices', ServicePriceSchema);
+const  ServicePrice= mongoose.model('ServicePrice', ServicePriceSchema);
 module.exports = ServicePrice;

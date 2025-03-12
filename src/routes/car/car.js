@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const car = require('../../models/car/car');
+const CarType = require('../../models/car/carType');
+const EngineType = require('../../models/car/engineType');
+const SizeType = require('../../models/car/sizeType');
+const WeightType = require('../../models/car/weightType');
+
 
 router.post('/', async (req, res) => {
     try {
@@ -14,11 +19,13 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
+        console.log("hdueude")
         const cars = await car.find()
-        .populate('cartypes')      
-        .populate('enginetypes')    
-        .populate('sizetypes')      
-        .populate('weighttypes')   
+            .populate('carType')      
+            .populate('engineType')    
+            .populate('sizeType')      
+            .populate('weightType')   
+        console.log(cars);
         res.json(cars);
     } catch (error) {
         res.status(500).json({ message: error.message });

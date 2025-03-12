@@ -14,8 +14,8 @@ const CarSchema = new mongoose.Schema({
   carType: { type: mongoose.Schema.Types.ObjectId, ref: 'CarType', required: true },
   engineType: { type: mongoose.Schema.Types.ObjectId, ref: 'EngineType', required: true },
   sizeType: { type: mongoose.Schema.Types.ObjectId, ref: 'SizeType', required: true },
-  weightType: { type: mongoose.Schema.Types.ObjectId, ref: 'WeightType', required: true },
+  weightType: { type: mongoose.Schema.Types.ObjectId, ref:'WeightType', required: true },
 });
 
-const Car = mongoose.model('cars', CarSchema);
+const Car = mongoose.model('Car', CarSchema);
 module.exports = Car;

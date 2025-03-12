@@ -15,6 +15,9 @@ const engineTypeRoutes =  require('./src/routes/car/engineTypes');
 const sizeTypeRoutes =  require('./src/routes/car/sizeTypes');
 const weigthTypeRoutes =  require('./src/routes/car/weightTypes');
 const carRoutes =  require('./src/routes/car/car');
+const serviceRoutes =  require('./src/routes/service/service');
+const servicePriceRoutes =  require('./src/routes/service/servicePrice');
+
 
 app
 .use(bodyParser.json())
@@ -31,6 +34,9 @@ app.use('/api/engines', engineTypeRoutes);
 app.use('/api/sizes', sizeTypeRoutes);
 app.use('/api/weigths', weigthTypeRoutes);
 app.use('/api/cars', carRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/serviceprices', servicePriceRoutes);
+
 
 
 
