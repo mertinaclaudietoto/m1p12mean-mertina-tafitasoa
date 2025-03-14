@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 const Service = require('../service/service');
+const Rule= Service('../emp/rule');
 const EmpSchema = new mongoose.Schema({
   name: { type: String, required: true },
   firstName: { type: String, required: true },
   dateofbirth: { type: String, required: true },
   dateofemp: { type: String, required: true },
+  login: {type: String, required: true, unique: true},
+  rule:{ type: mongoose.Schema.Types.ObjectId, ref: 'Rule', required: true },
+  password: {type: String, required: true},
   skills: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Service', required: true }]
 });
 

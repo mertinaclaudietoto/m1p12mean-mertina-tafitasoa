@@ -9,7 +9,7 @@ const servicePrice = require("../models/service/servicePrice");
 
 const { Types } = require('mongoose');  // Assurez-vous d'importer Types de mongoose
 const Emp = require("../models/emp/emp");
-
+const Rule = require("../models/emp/rule")
 const DEFAULTDATA = [
   { 
     model: CarType, 
@@ -379,6 +379,7 @@ const DEFAULTDATA = [
         firstName: "Pierre",
         dateofbirth: "1990-01-01",
         dateofemp: "2015-03-15",
+        rule:new Types.ObjectId("000000000000000000000003"),
         skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000003"),new Types.ObjectId("000000000000000000000004"),new Types.ObjectId("000000000000000000000005")] 
       },
       {
@@ -386,6 +387,7 @@ const DEFAULTDATA = [
         firstName: "Claire",
         dateofbirth: "1985-08-23",
         dateofemp: "2010-06-10",
+        rule:new Types.ObjectId("000000000000000000000003"),
         skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000005")] 
       },
       {
@@ -393,6 +395,7 @@ const DEFAULTDATA = [
         firstName: "Julien",
         dateofbirth: "1993-11-11",
         dateofemp: "2018-09-01",
+        rule:new Types.ObjectId("000000000000000000000003"),
         skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000005")] 
       },
       {
@@ -400,6 +403,7 @@ const DEFAULTDATA = [
         firstName: "Sophie",
         dateofbirth: "1992-05-14",
         dateofemp: "2016-12-25",
+        rule:new Types.ObjectId("000000000000000000000003"),
         skills: [new Types.ObjectId("000000000000000000000003"), new Types.ObjectId("000000000000000000000004"),new Types.ObjectId("000000000000000000000005")] 
       },
       {
@@ -407,10 +411,19 @@ const DEFAULTDATA = [
         firstName: "Maxime",
         dateofbirth: "1988-02-20",
         dateofemp: "2012-01-12",
+        rule:new Types.ObjectId("000000000000000000000003"),
         skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000003")] 
       }
     ]
-},
+  },
+  { 
+    model: Rule, 
+    data: [
+      { _id: new Types.ObjectId("000000000000000000000001"), name: "Manager" },
+      { _id: new Types.ObjectId("000000000000000000000002"), name: "Custumer" },
+      { _id: new Types.ObjectId("000000000000000000000003"), name: "Mechanic" },
+    ] 
+  },
 ];
 
 
