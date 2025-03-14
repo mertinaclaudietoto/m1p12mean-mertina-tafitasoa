@@ -7,8 +7,8 @@ const service = require("../models/service/service");
 const servicePrice = require("../models/service/servicePrice");
 
 
-
 const { Types } = require('mongoose');  // Assurez-vous d'importer Types de mongoose
+const Emp = require("../models/emp/emp");
 
 const DEFAULTDATA = [
   { 
@@ -370,7 +370,47 @@ const DEFAULTDATA = [
           service:new Types.ObjectId("000000000000000000000005")
         },
     ]
-  }
+  },
+  {
+    model: Emp, 
+    data: [
+      {
+        name: "Dupont",
+        firstName: "Pierre",
+        dateofbirth: "1990-01-01",
+        dateofemp: "2015-03-15",
+        skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000003"),new Types.ObjectId("000000000000000000000004"),new Types.ObjectId("000000000000000000000005")] 
+      },
+      {
+        name: "Martin",
+        firstName: "Claire",
+        dateofbirth: "1985-08-23",
+        dateofemp: "2010-06-10",
+        skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000005")] 
+      },
+      {
+        name: "Durand",
+        firstName: "Julien",
+        dateofbirth: "1993-11-11",
+        dateofemp: "2018-09-01",
+        skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000005")] 
+      },
+      {
+        name: "Lemoine",
+        firstName: "Sophie",
+        dateofbirth: "1992-05-14",
+        dateofemp: "2016-12-25",
+        skills: [new Types.ObjectId("000000000000000000000003"), new Types.ObjectId("000000000000000000000004"),new Types.ObjectId("000000000000000000000005")] 
+      },
+      {
+        name: "Leclerc",
+        firstName: "Maxime",
+        dateofbirth: "1988-02-20",
+        dateofemp: "2012-01-12",
+        skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000003")] 
+      }
+    ]
+},
 ];
 
 

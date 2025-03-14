@@ -3,7 +3,6 @@ const CarType = require('./carType');
 const EngineType = require('./engineType'); 
 const SizeType = require('./sizeType'); 
 const WeightType = require('./weightType'); 
-
 const CarSchema = new mongoose.Schema({
   picture: { type: String, required: true },
   brand: { type: String, required: true },

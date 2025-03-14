@@ -17,11 +17,17 @@ const weigthTypeRoutes =  require('./src/routes/car/weightTypes');
 const carRoutes =  require('./src/routes/car/car');
 const serviceRoutes =  require('./src/routes/service/service');
 const servicePriceRoutes =  require('./src/routes/service/servicePrice');
-
+const empRoutes = require('./src/routes/emp/Emp');
 
 app
 .use(bodyParser.json())
-.use(cors())
+app.use(cors({
+  origin: '*',  // Ou l'URL de ton frontend ex: 'http://localhost:4200'
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connecté")
@@ -36,6 +42,8 @@ app.use('/api/weigths', weigthTypeRoutes);
 app.use('/api/cars', carRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/serviceprices', servicePriceRoutes);
+app.use('/api/emps',empRoutes);
+
 
 
 

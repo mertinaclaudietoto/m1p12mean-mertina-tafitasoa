@@ -41,7 +41,6 @@ router.put('/:id', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
-    // Supprimer un article
 router.delete('/:id', async (req, res) => {
     try {
         await car.findByIdAndDelete(req.params.id);
