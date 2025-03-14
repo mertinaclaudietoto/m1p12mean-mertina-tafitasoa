@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Service = require('../service/service');
-const Rule= Service('../emp/rule');
+const Rule = Service('../emp/rule');
 const EmpSchema = new mongoose.Schema({
   name: { type: String, required: true },
   firstName: { type: String, required: true },
@@ -14,3 +14,4 @@ const EmpSchema = new mongoose.Schema({
 
 const Emp = mongoose.model('Emp', EmpSchema);
 module.exports = Emp;
+
