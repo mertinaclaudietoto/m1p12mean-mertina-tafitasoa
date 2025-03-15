@@ -36,7 +36,9 @@ mongoose.connect(process.env.MONGO_URI)
         // clearAndInsertData(DEFAULTDATA);
     })
     .catch(err => console.log(err))
-
+app.get('/', async (req, res) => {
+  console.log("hello heroku")
+  });
 app.use('/api/cartypes', carTypeRoutes);
 app.use('/api/engines', engineTypeRoutes);
 app.use('/api/sizes', sizeTypeRoutes);
