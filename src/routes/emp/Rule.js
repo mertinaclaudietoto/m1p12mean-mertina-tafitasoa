@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Emp=require('../../models/emp/emp');
+const Emp=require('../../models/emp/rule');
 
 
 router.post('/', async (req, res) => {
@@ -15,8 +15,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const values = await Emp.find()
-        .populate('skills')   
+        const values = await Emp.find() 
         res.json(values);
     } catch (error) {
         res.status(500).json({ message: error.message });

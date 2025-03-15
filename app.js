@@ -18,6 +18,8 @@ const carRoutes =  require('./src/routes/car/car');
 const serviceRoutes =  require('./src/routes/service/service');
 const servicePriceRoutes =  require('./src/routes/service/servicePrice');
 const empRoutes = require('./src/routes/emp/Emp');
+const ruleRoutes = require('./src/routes/emp/Rule');
+
 
 app
 .use(bodyParser.json())
@@ -31,7 +33,7 @@ app.use(cors({
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connecté")
-        clearAndInsertData(DEFAULTDATA);
+        // clearAndInsertData(DEFAULTDATA);
     })
     .catch(err => console.log(err))
 
@@ -43,6 +45,8 @@ app.use('/api/cars', carRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/serviceprices', servicePriceRoutes);
 app.use('/api/emps',empRoutes);
+app.use('/api/rules',ruleRoutes);
+
 
 
 
