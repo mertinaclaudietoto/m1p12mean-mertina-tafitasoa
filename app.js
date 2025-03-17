@@ -19,6 +19,8 @@ const serviceRoutes =  require('./src/routes/service/service');
 const servicePriceRoutes =  require('./src/routes/service/servicePrice');
 const empRoutes = require('./src/routes/emp/Emp');
 const ruleRoutes = require('./src/routes/emp/Rule');
+const bcrypt = require("bcrypt");
+
 
 
 app
@@ -33,7 +35,7 @@ app.use(cors({
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connecté")
-        clearAndInsertData(DEFAULTDATA);
+        // clearAndInsertData(DEFAULTDATA);
     })
     .catch(err => console.log(err))
 app.get('/', async (req, res) => {

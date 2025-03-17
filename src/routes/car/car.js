@@ -5,9 +5,9 @@ const CarType = require('../../models/car/carType');
 const EngineType = require('../../models/car/engineType');
 const SizeType = require('../../models/car/sizeType');
 const WeightType = require('../../models/car/weigthType');
+const auth = require('../../midelewares/mechanic')
 
-
-router.post('/', async (req, res) => {
+router.post('/',async (req, res) => {
     try {
         const cars = new car(req.body);
         await cars.save();
