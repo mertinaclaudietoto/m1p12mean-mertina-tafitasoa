@@ -4,7 +4,7 @@ const car = require('../../models/car/car');
 const CarType = require('../../models/car/carType');
 const EngineType = require('../../models/car/engineType');
 const SizeType = require('../../models/car/sizeType');
-const WeightType = require('../../models/car/weightType');
+const WeightType = require('../../models/car/weigthType');
 
 
 router.post('/', async (req, res) => {
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
             .populate('carType')      
             .populate('engineType')    
             .populate('sizeType')      
-            .populate('weightType')   
+            .populate('weigthType')   
         console.log(cars);
         res.json(cars);
     } catch (error) {

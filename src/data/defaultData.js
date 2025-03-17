@@ -1,7 +1,7 @@
 const CarType = require("../models/car/carType");
 const engineTypes = require("../models/car/engineType");
 const sizeTypes = require("../models/car/sizeType");
-const weightTypes = require("../models/car/weightType");
+const weigthTypes = require("../models/car/weigthType");
 const car = require("../models/car/car");
 const service = require("../models/service/service");
 const servicePrice = require("../models/service/servicePrice");
@@ -59,7 +59,7 @@ const DEFAULTDATA = [
     ] 
   },
   { 
-    model: weightTypes, 
+    model: weigthTypes, 
     data: [
       { _id: new Types.ObjectId("000000000000000000000001"), name: "Légère" },
       { _id: new Types.ObjectId("000000000000000000000002"), name: "Moyenne" },
@@ -92,7 +92,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000001"),  // "Berline"
         engineType: new Types.ObjectId("000000000000000000000001"),  // "Essence"
         sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
-        weightType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
+        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
       },
       {
         _id: new Types.ObjectId("000000000000000000000002"),
@@ -105,7 +105,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000002"),  // "Break"
         engineType: new Types.ObjectId("000000000000000000000002"),  // "Diesel"
         sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        weightType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
       },
       {
         _id: new Types.ObjectId("000000000000000000000003"),
@@ -118,7 +118,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000008"),  // "SUV"
         engineType: new Types.ObjectId("000000000000000000000006"),  // "Électrique CC"
         sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
-        weightType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
+        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
       },
       {
         _id: new Types.ObjectId("000000000000000000000004"),
@@ -131,7 +131,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000003"),  // "Coupé"
         engineType: new Types.ObjectId("000000000000000000000004"),  // "Hybride Parallèle"
         sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        weightType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
+        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
       },
       {
         _id: new Types.ObjectId("000000000000000000000010"),
@@ -144,7 +144,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000004"),  // "Cabriolet"
         engineType: new Types.ObjectId("000000000000000000000005"),  // "Hybride Plug-in"
         sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
-        weightType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
       },
       {
         _id: new Types.ObjectId("000000000000000000000005"),
@@ -157,7 +157,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000008"),  // "SUV"
         engineType: new Types.ObjectId("000000000000000000000007"),  // "Électrique Synchrone"
         sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        weightType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
+        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
       },
       {
         _id: new Types.ObjectId("000000000000000000000006"),
@@ -170,7 +170,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000005"),  // "Hatchback"
         engineType: new Types.ObjectId("000000000000000000000003"),  // "Hybride Série"
         sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
-        weightType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
+        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
       },
       {
         _id: new Types.ObjectId("000000000000000000000007"),
@@ -183,7 +183,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000006"),  // "Roadster"
         engineType: new Types.ObjectId("000000000000000000000002"),  // "Diesel"
         sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        weightType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
       },
       {
         _id: new Types.ObjectId("000000000000000000000008"),
@@ -196,7 +196,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000007"),  // "Limousine"
         engineType: new Types.ObjectId("000000000000000000000008"),  // "Électrique Asynchrone"
         sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
-        weightType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
+        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
       },
       {
         _id: new Types.ObjectId("000000000000000000000009"),
@@ -209,7 +209,7 @@ const DEFAULTDATA = [
         carType: new Types.ObjectId("000000000000000000000009"),  // "Crossover"
         engineType: new Types.ObjectId("000000000000000000000009"),  // "Hydrogène"
         sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
-        weightType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
+        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
       }
     ] 
   },{

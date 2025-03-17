@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const CarType = require('./carType'); 
 const EngineType = require('./engineType'); 
 const SizeType = require('./sizeType'); 
-const WeightType = require('./weightType'); 
+const WeigthType = require('./weigthType'); 
 const CarSchema = new mongoose.Schema({
   picture: { type: String, required: true },
   brand: { type: String, required: true },
@@ -13,7 +13,7 @@ const CarSchema = new mongoose.Schema({
   carType: { type: mongoose.Schema.Types.ObjectId, ref: 'CarType', required: true },
   engineType: { type: mongoose.Schema.Types.ObjectId, ref: 'EngineType', required: true },
   sizeType: { type: mongoose.Schema.Types.ObjectId, ref: 'SizeType', required: true },
-  weightType: { type: mongoose.Schema.Types.ObjectId, ref:'WeightType', required: true },
+  weigthType: { type: mongoose.Schema.Types.ObjectId, ref:'WeigthType', required: true },
 });
 
 const Car = mongoose.model('Car', CarSchema);
