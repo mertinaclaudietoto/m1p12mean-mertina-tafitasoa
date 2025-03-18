@@ -4,8 +4,8 @@ const Emp=require('../../models/emp/emp');
 const bcrypt = require('bcrypt')
 const jwt=require("jsonwebtoken");
 const privateKey = require('../../auth/private_key');
-
-router.post('/', async (req, res) => {
+const hasPassword = require('../../midelewares/hashpassword')
+router.post('/',hasPassword, async (req, res) => {
     try {
         const values = new Emp(req.body);
         await values.save();

@@ -1,4 +1,3 @@
-/* Authentification : Créer un modèle User avec Sequelize */
 const jwt = require('jsonwebtoken')
 const privateKey = require('../auth/private_key')
   

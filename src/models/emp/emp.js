@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Service = require('../service/service');
 const Rule = require('../emp/rule');
 const EmpSchema = new mongoose.Schema({
+  picture:{ type: String, required: true },
   name: { type: String, required: true },
   firstName: { type: String, required: true },
   dateofbirth: { type: String, required: true },
