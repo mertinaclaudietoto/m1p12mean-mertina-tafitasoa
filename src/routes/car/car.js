@@ -34,9 +34,11 @@ router.get('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        const car = await car.findByIdAndUpdate(req.params.id,
-        req.body, { new: true });
-        res.json(car);
+        const updatedCar = await car.findByIdAndUpdate(req.params.id,req.body, { new: true });
+        if (!updatedCar) {
+            return res.status(404).json({ message: "Voiture non trouvée" });
+        }
+        res.json(updatedCar);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -44,7 +46,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         await car.findByIdAndDelete(req.params.id);
-        res.json({ message: "Car tyoe delete " });
+        res.json({ message: "Car type delete " });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
