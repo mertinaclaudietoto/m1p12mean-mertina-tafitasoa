@@ -1,6 +1,9 @@
-const mongoose = require('mongoose');
-const SizeTypeSchema = new mongoose.Schema({
+const mongoose = require("mongoose");
+const SizeTypeSchema = new mongoose.Schema(
+  {
     name: { type: String, required: true },
-}, { timestamps: true });
-module.exports = mongoose.model('SizeType', SizeTypeSchema);
-
+    percentage: { type: Number, required: true },
+  },
+  { timestamps: true }
+);
+module.exports = mongoose.model("SizeType", SizeTypeSchema);
