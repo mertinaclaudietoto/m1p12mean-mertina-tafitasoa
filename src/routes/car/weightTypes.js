@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const weigthType = require("../../models/car/weigthType");
+const weigthType = require("../../models/weigthType");
 
 router.post("/", async (req, res) => {
   try {

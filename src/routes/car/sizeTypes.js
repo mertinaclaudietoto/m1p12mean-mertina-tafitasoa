@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const sizeType = require("../../models/car/sizeType");
+const sizeType = require("../../models/sizeType");
 
 router.post("/", async (req, res) => {
   try {

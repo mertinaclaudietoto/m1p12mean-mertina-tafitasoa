@@ -1,7 +1,7 @@
-const CarType = require("../models/car/carType");
-const engineTypes = require("../models/car/engineType");
-const sizeTypes = require("../models/car/sizeType");
-const weigthTypes = require("../models/car/weigthType");
+const CarType = require("../models/carType");
+const engineTypes = require("../models/engineType");
+const sizeTypes = require("../models/sizeType");
+const weigthTypes = require("../models/weigthType");
 const bcrypt = require("bcrypt");
 
 const { Types } = require("mongoose");
@@ -50,9 +50,9 @@ const DEFAULTDATA = [
   {
     model: weigthTypes,
     data: [
-      {  name: "Légère", percentage: 93 },
+      { name: "Légère", percentage: 93 },
       { name: "Moyenne", percentage: 89 },
-      {  name: "Lourde", percentage: 90 },
+      { name: "Lourde", percentage: 90 },
     ],
   },
   {

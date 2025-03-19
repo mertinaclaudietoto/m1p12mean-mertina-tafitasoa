@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const EngineType = require("../../models/car/engineType");
+const EngineType = require("../../models/engineType");
 
 router.post("/", async (req, res) => {
   try {
