@@ -23,7 +23,6 @@ router.get('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        console.log("DEDEDE");
         const carType = await CarType.findByIdAndUpdate(req.params.id,
         req.body, { new: true });
         res.json(carType);

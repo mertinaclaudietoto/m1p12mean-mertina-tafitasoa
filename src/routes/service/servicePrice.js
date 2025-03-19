@@ -15,7 +15,15 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const service = await Service.find()
-        .populate('car')      
+        .populate({
+            path: 'car', 
+            populate: [
+                { path: 'carType' },   
+                { path: 'engineType' }, 
+                { path: 'sizeType' },   
+                { path: 'weigthType' }  
+            ]
+        })     
         .populate('service')    ;
         res.json(service);
     } catch (error) {

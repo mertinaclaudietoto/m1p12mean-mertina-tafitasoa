@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 async function clearAndInsertData(models) {
   try {
     for (const { model, data } of models) {
-      await model.deleteMany({}); 
+      // await model.deleteMany({}); 
+      await model.collection.drop();
       console.log(`Données de la collection ${model.modelName} supprimées.`);
       await model.insertMany(data);
       console.log(`Données de la collection ${model.modelName} insérées.`);

@@ -19,13 +19,12 @@ router.post('/',async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        console.log("hdueude")
+       
         const cars = await car.find()
             .populate('carType')      
             .populate('engineType')    
             .populate('sizeType')      
             .populate('weigthType')   
-        console.log(cars);
         res.json(cars);
     } catch (error) {
         res.status(500).json({ message: error.message });
