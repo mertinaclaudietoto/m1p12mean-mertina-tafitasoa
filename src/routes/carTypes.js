@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const weigthType = require("../../models/weigthType");
+const CarType = require("../models/carType");
 
 router.post("/", async (req, res) => {
   try {
-    const weigthTypes = new weigthType(req.body);
-    await weigthTypes.save();
-    res.status(201).json(weigthTypes);
+    const carTypes = new CarType(req.body);
+    await carTypes.save();
+    res.status(201).json(carTypes);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -14,8 +14,8 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const weigthTypes = await weigthType.find();
-    res.json(weigthTypes);
+    const carTypes = await CarType.find();
+    res.json(carTypes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -23,12 +23,10 @@ router.get("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const weigthType = await weigthType.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    res.json(weigthType);
+    const carType = await CarType.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.json(carType);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -36,7 +34,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await weigthType.findByIdAndDelete(req.params.id);
+    await CarType.findByIdAndDelete(req.params.id);
     res.json({ message: "Car tyoe delete " });
   } catch (error) {
     res.status(500).json({ message: error.message });
