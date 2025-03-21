@@ -19,9 +19,11 @@ const serviceRoutes =  require('./src/routes/service/service');
 const servicePriceRoutes =  require('./src/routes/service/servicePrice');
 const empRoutes = require('./src/routes/emp/Emp');
 const ruleRoutes = require('./src/routes/emp/Rule');
+const validateMailRoutes = require('./src/routes/email/validate');
+const sexRoutes = require('./src/routes/emp/Sex');
+
+
 const bcrypt = require("bcrypt");
-
-
 
 app
 .use(bodyParser.json())
@@ -50,6 +52,10 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/serviceprices', servicePriceRoutes);
 app.use('/api/emps',empRoutes);
 app.use('/api/rules',ruleRoutes);
+app.use('/api/register',validateMailRoutes);
+app.use('/api/sexs',sexRoutes);
+
+
 
 
 

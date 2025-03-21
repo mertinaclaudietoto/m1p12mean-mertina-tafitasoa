@@ -31,6 +31,40 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/rows', async (req, res) => {
+    try {
+        const service = await Service.find()
+        .countDocuments();     
+        res.json(service);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.get('/:skip/:limit', async (req, res) => {
+    try {
+        const skip = parseInt(req.params.skip, 10) || 0;
+        const limit = parseInt(req.params.limit, 10) || 10;
+        const service = await Service.find()
+        .populate({
+            path: 'car', 
+            populate: [
+                { path: 'carType' },   
+                { path: 'engineType' }, 
+                { path: 'sizeType' },   
+                { path: 'weigthType' }  
+            ]
+        })     
+        .populate('service')
+        .skip(skip)
+        .limit(limit);
+        res.json(service);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
 router.put('/:id', async (req, res) => {
     try {
         const service = await Service.findByIdAndUpdate(req.params.id,
