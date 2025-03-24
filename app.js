@@ -9,23 +9,29 @@ const app = express();
 const { clearAndInsertData } = require("./src/data/ClearAndInsert");
 const { DEFAULTDATA } = require("./src/data/defaultData");
 
-const carTypeRoutes = require("./src/routes/carTypes");
-const engineTypeRoutes = require("./src/routes/engineTypes");
-const sizeTypeRoutes = require("./src/routes/sizeTypes");
-const weigthTypeRoutes = require("./src/routes/weightTypes");
-const serviceRoutes = require("./src/routes/service");
-const empRoutes = require("./src/routes/emp/Emp");
-const ruleRoutes = require("./src/routes/emp/Rule");
+
+const carTypeRoutes = require('./src/routes/car/carTypes');
+const engineTypeRoutes =  require('./src/routes/car/engineTypes');
+const sizeTypeRoutes =  require('./src/routes/car/sizeTypes');
+const weigthTypeRoutes =  require('./src/routes/car/weightTypes');
+const carRoutes =  require('./src/routes/car/car');
+const serviceRoutes =  require('./src/routes/service/service');
+const servicePriceRoutes =  require('./src/routes/service/servicePrice');
+const empRoutes = require('./src/routes/emp/Emp');
+const ruleRoutes = require('./src/routes/emp/Rule');
+const validateMailRoutes = require('./src/routes/email/validate');
+const sexRoutes = require('./src/routes/emp/Sex');
+const carCostumerRoutes = require('./src/routes/costumers/carcostumer');
+
 const bcrypt = require("bcrypt");
 
-app.use(bodyParser.json());
-app.use(
-  cors({
-    origin: "*", // Ou l'URL de ton frontend ex: 'http://localhost:4200'
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app
+.use(bodyParser.json())
+app.use(cors({
+  origin: '*',  
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
@@ -33,9 +39,9 @@ mongoose.connect(process.env.MONGO_URI)
         clearAndInsertData(DEFAULTDATA);
     })
     .catch(err => console.log(err))
-app.get('/', async (req, res) => {
-  console.log("hello heroku")
-  });
+
+app.get('/', async (req, res) => { console.log("hello heroku") });
+
 app.use('/api/cartypes', carTypeRoutes);
 app.use('/api/engines', engineTypeRoutes);
 app.use('/api/sizes', sizeTypeRoutes);
@@ -45,6 +51,10 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/serviceprices', servicePriceRoutes);
 app.use('/api/emps',empRoutes);
 app.use('/api/rules',ruleRoutes);
+app.use('/api/register',validateMailRoutes);
+app.use('/api/sexs',sexRoutes);
+app.use('/api/car-costumers',carCostumerRoutes);
+
 
 
 

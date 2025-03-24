@@ -43,18 +43,17 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-router.post('/login', (req, res) => {
-    
+router.post('/login',async (req, res) => {
     Emp.findOne({ login: req.body.login }).then(user => {
-        console.log(user)
+        // console.log(user)
         if(!user){
             const message= "User not found";
-            return res.status(400).json({ message })
+            return res.status(400).json({ message,column:0 })
         }
       bcrypt.compare(req.body.password, user.password).then(isPasswordValid => {
         if(!isPasswordValid){
             const message= "False passWord";
-            return res.status(400).json({ message })
+            return res.status(400).json({ message,column:1 })
         }
         const token = jwt.sign(
             {userId:user._id,idrule:user.rule._id},
@@ -63,7 +62,7 @@ router.post('/login', (req, res) => {
         )
         if(isPasswordValid) {
           const message = `L'utilisateur a été connecté avec succès`;
-          return res.json({ message, data: user,token })
+          return res.json({ message, picture: user.picture,iduser:user._id,idrole:user.rule._id,token })
         }
       })
     })
