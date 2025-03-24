@@ -10,18 +10,16 @@ const { clearAndInsertData } = require("./src/data/ClearAndInsert");
 const { DEFAULTDATA } = require("./src/data/defaultData");
 
 
-const carTypeRoutes = require('./src/routes/car/carTypes');
-const engineTypeRoutes =  require('./src/routes/car/engineTypes');
-const sizeTypeRoutes =  require('./src/routes/car/sizeTypes');
-const weigthTypeRoutes =  require('./src/routes/car/weightTypes');
-const carRoutes =  require('./src/routes/car/car');
-const serviceRoutes =  require('./src/routes/service/service');
-const servicePriceRoutes =  require('./src/routes/service/servicePrice');
+const carTypeRoutes = require('./src/routes/carTypes');
+const engineTypeRoutes =  require('./src/routes/engineTypes');
+const sizeTypeRoutes =  require('./src/routes/sizeTypes');
+const weigthTypeRoutes =  require('./src/routes/weightTypes');
+const serviceRoutes =  require('./src/routes/service');
 const empRoutes = require('./src/routes/emp/Emp');
 const ruleRoutes = require('./src/routes/emp/Rule');
 const validateMailRoutes = require('./src/routes/email/validate');
 const sexRoutes = require('./src/routes/emp/Sex');
-const carCostumerRoutes = require('./src/routes/costumers/carcostumer');
+const carCostumerRoutes = require('./src/routes/carcostumer');
 
 const bcrypt = require("bcrypt");
 
@@ -46,9 +44,7 @@ app.use('/api/cartypes', carTypeRoutes);
 app.use('/api/engines', engineTypeRoutes);
 app.use('/api/sizes', sizeTypeRoutes);
 app.use('/api/weigths', weigthTypeRoutes);
-app.use('/api/cars', carRoutes);
 app.use('/api/services', serviceRoutes);
-app.use('/api/serviceprices', servicePriceRoutes);
 app.use('/api/emps',empRoutes);
 app.use('/api/rules',ruleRoutes);
 app.use('/api/register',validateMailRoutes);

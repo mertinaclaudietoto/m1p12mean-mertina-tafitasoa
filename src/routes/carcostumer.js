@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Emp=require('../../models/costumers/carCostumer');
-const auth= require('../../midelewares/costumer')
+const Emp=require('../models/carCostumer');
+const auth= require('../midelewares/costumer')
 
 router.post('/',auth,async (req, res) => {
     try {
