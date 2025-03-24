@@ -2,6 +2,7 @@ const CarType = require("../models/car/carType");
 const engineTypes = require("../models/car/engineType");
 const sizeTypes = require("../models/car/sizeType");
 const weigthTypes = require("../models/car/weigthType");
+const carClients = require("../models/costumers/carCostumer");
 const car = require("../models/car/car");
 const service = require("../models/service/service");
 const servicePrice = require("../models/service/servicePrice");
@@ -438,7 +439,7 @@ const DEFAULTDATA = [
         dateofemp: "2012-01-12",
         login:"leclercmaxime@gmail.com",
         password:"$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
-        rule:new Types.ObjectId("000000000000000000000003"),
+        rule:new Types.ObjectId("000000000000000000000002"),
         sex:new Types.ObjectId("000000000000000000000001"),
         skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000003")] 
       }
@@ -448,7 +449,7 @@ const DEFAULTDATA = [
     model: Rule, 
     data: [
       { _id: new Types.ObjectId("000000000000000000000001"), name: "Manager" },
-      { _id: new Types.ObjectId("000000000000000000000002"), name: "Customer" },
+      { _id: new Types.ObjectId("000000000000000000000002"), name: "Costumer" },
       { _id: new Types.ObjectId("000000000000000000000003"), name: "Mechanic" },
     ] 
   },
@@ -457,6 +458,152 @@ const DEFAULTDATA = [
     data: [
       { _id: new Types.ObjectId("000000000000000000000001"), name: "Mal" },
       { _id: new Types.ObjectId("000000000000000000000002"), name: "Female" },
+    ] 
+  },
+  { 
+    model: carClients, 
+    data: [
+      {
+        _id: new Types.ObjectId("000000000000000000000001"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370839/v6i2qbqoop6v3vnjcsll.jpg",
+        brand: "Toyota",
+        model: "Corolla",
+        version: "2025",
+        datesortie: new Date("2025-01-01"),
+        empathement: "AB-123-CD",
+        carType: new Types.ObjectId("000000000000000000000001"),  // "Berline"
+        engineType: new Types.ObjectId("000000000000000000000001"),  // "Essence"
+        sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
+        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000002"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742368832/hxjrgpovi9zas9ryulzf.jpg",
+        brand: "Ford",
+        model: "Focus",
+        version: "2024",
+        datesortie: new Date("2024-01-01"),
+        empathement: "EF-456-GH",
+        carType: new Types.ObjectId("000000000000000000000002"),  // "Break"
+        engineType: new Types.ObjectId("000000000000000000000002"),  // "Diesel"
+        sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000003"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369018/traijeaxmocfs9ulmpj5.jpg",
+        brand: "BMW",
+        model: "X5",
+        version: "2023",
+        datesortie: new Date("2023-01-01"),
+        empathement: "IJ-789-KL",
+        carType: new Types.ObjectId("000000000000000000000008"),  // "SUV"
+        engineType: new Types.ObjectId("000000000000000000000006"),  // "Électrique CC"
+        sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
+        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000004"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369252/dgsxtleelfvxfypm0xa1.jpg",
+        brand: "Mercedes",
+        model: "A-Class",
+        version: "2022",
+        datesortie: new Date("2022-01-01"),
+        empathement: "MN-012-OP",
+        carType: new Types.ObjectId("000000000000000000000003"),  // "Coupé"
+        engineType: new Types.ObjectId("000000000000000000000004"),  // "Hybride Parallèle"
+        sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000010"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369601/cmgmzwm9kqqqhimtos8k.jpg",
+        brand: "Audi",
+        model: "A6",
+        version: "2021",
+        datesortie: new Date("2021-01-01"),
+        empathement: "QR-345-ST",
+        carType: new Types.ObjectId("000000000000000000000004"),  // "Cabriolet"
+        engineType: new Types.ObjectId("000000000000000000000005"),  // "Hybride Plug-in"
+        sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
+        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000005"),
+        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742369768/wa7vzo3rzcogakspjt5l.jpg",
+        brand: "Nissan",
+        model: "Leaf",
+        version: "2020",
+        datesortie: new Date("2020-01-01"),
+        empathement: "UV-678-WX",
+        carType: new Types.ObjectId("000000000000000000000008"),  // "SUV"
+        engineType: new Types.ObjectId("000000000000000000000007"),  // "Électrique Synchrone"
+        sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000006"),
+        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742370179/f0d3rovywplehuengeky.jpg",
+        brand: "Chevrolet",
+        model: "Camaro",
+        version: "2019",
+        datesortie: new Date("2019-01-01"),
+        empathement: "YZ-901-AB",
+        carType: new Types.ObjectId("000000000000000000000005"),  // "Hatchback"
+        engineType: new Types.ObjectId("000000000000000000000003"),  // "Hybride Série"
+        sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
+        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000007"),
+        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742370532/p1dpixplhvgyae4dt6gj.jpg" ,
+        brand: "Volkswagen",
+        model: "Golf",
+        version: "2018",
+        datesortie: new Date("2018-01-01"),
+        empathement: "CD-234-EF",
+        carType: new Types.ObjectId("000000000000000000000006"),  // "Roadster"
+        engineType: new Types.ObjectId("000000000000000000000002"),  // "Diesel"
+        sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000008"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370619/rfbv1zbqkpiektceuzcu.jpg",
+        brand: "Porsche",
+        model: "911",
+        version: "2017",
+        datesortie: new Date("2017-01-01"),
+        empathement: "GH-567-IJ",
+        carType: new Types.ObjectId("000000000000000000000007"),  // "Limousine"
+        engineType: new Types.ObjectId("000000000000000000000008"),  // "Électrique Asynchrone"
+        sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
+        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
+        costumer:new Types.ObjectId("000000000000000000000005")
+
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000009"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370724/hmdjcgho32mioy8hb8r2.jpg",
+        brand: "Ferrari",
+        model: "488 GTB",
+        version: "2016",
+        datesortie: new Date("2016-01-01"),
+        empathement: "KL-890-MN",
+        carType: new Types.ObjectId("000000000000000000000009"),  // "Crossover"
+        engineType: new Types.ObjectId("000000000000000000000009"),  // "Hydrogène"
+        sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
+        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
+        costumer:new Types.ObjectId("000000000000000000000005")
+      }
     ] 
   },
 ];

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Emp=require('../../models/emp/sex');
 
-
 router.post('/', async (req, res) => {
     try {
         const values = new Emp(req.body);

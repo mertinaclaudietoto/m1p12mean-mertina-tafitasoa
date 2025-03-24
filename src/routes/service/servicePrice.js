@@ -12,7 +12,9 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/:skip/:limit', async (req, res) => {
+    const skip = parseInt(req.params.skip, 10) || 0;
+    const limit = parseInt(req.params.limit, 10) || 10;
     try {
         const service = await Service.find()
         .populate({
@@ -24,7 +26,9 @@ router.get('/', async (req, res) => {
                 { path: 'weigthType' }  
             ]
         })     
-        .populate('service')    ;
+        .populate('service')
+        .skip(skip)
+        .limit(limit);
         res.json(service);
     } catch (error) {
         res.status(500).json({ message: error.message });

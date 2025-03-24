@@ -21,7 +21,7 @@ const empRoutes = require('./src/routes/emp/Emp');
 const ruleRoutes = require('./src/routes/emp/Rule');
 const validateMailRoutes = require('./src/routes/email/validate');
 const sexRoutes = require('./src/routes/emp/Sex');
-
+const carCostumerRoutes = require('./src/routes/costumers/carcostumer');
 
 const bcrypt = require("bcrypt");
 
@@ -54,6 +54,8 @@ app.use('/api/emps',empRoutes);
 app.use('/api/rules',ruleRoutes);
 app.use('/api/register',validateMailRoutes);
 app.use('/api/sexs',sexRoutes);
+app.use('/api/car-costumers',carCostumerRoutes);
+
 
 
 
