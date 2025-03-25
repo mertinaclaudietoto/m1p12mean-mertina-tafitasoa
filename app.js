@@ -20,6 +20,8 @@ const ruleRoutes = require('./src/routes/emp/Rule');
 const validateMailRoutes = require('./src/routes/email/validate');
 const sexRoutes = require('./src/routes/emp/Sex');
 const carCostumerRoutes = require('./src/routes/carcostumer');
+const serviceClientRoutes = require('./src/routes/client/serviceClients');
+
 
 const bcrypt = require("bcrypt");
 
@@ -34,7 +36,7 @@ app.use(cors({
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connecté")
-        clearAndInsertData(DEFAULTDATA);
+        // clearAndInsertData(DEFAULTDATA);
     })
     .catch(err => console.log(err))
 
@@ -50,6 +52,8 @@ app.use('/api/rules',ruleRoutes);
 app.use('/api/register',validateMailRoutes);
 app.use('/api/sexs',sexRoutes);
 app.use('/api/car-costumers',carCostumerRoutes);
+app.use('/api/services-client',serviceClientRoutes);
+
 
 
 
