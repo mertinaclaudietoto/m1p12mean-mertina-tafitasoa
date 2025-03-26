@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const CarType = require('./carType'); 
-const EngineType = require('./engineType'); 
-const SizeType = require('./sizeType'); 
-const WeigthType = require('./weigthType'); 
-const Emp = require('./emp/emp'); 
+const CarType = require('../carType'); 
+const EngineType = require('../engineType'); 
+const SizeType = require('../sizeType'); 
+const WeigthType = require('../weigthType'); 
+const Emp = require('../emp/emp'); 
 
 const CarCostumerSchema = new mongoose.Schema({
   picture: { type: String, required: true },

@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const puppeteer = require("puppeteer");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const cors = require("cors");
@@ -8,7 +8,6 @@ const app = express();
 // router
 const { clearAndInsertData } = require("./src/data/ClearAndInsert");
 const { DEFAULTDATA } = require("./src/data/defaultData");
-
 
 const carTypeRoutes = require('./src/routes/carTypes');
 const engineTypeRoutes =  require('./src/routes/engineTypes');
@@ -20,6 +19,8 @@ const ruleRoutes = require('./src/routes/emp/Rule');
 const validateMailRoutes = require('./src/routes/email/validate');
 const sexRoutes = require('./src/routes/emp/Sex');
 const carCostumerRoutes = require('./src/routes/carcostumer');
+const serviceClientRoutes = require('./src/routes/client/serviceClients');
+
 
 const bcrypt = require("bcrypt");
 
@@ -34,7 +35,7 @@ app.use(cors({
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connecté")
-        clearAndInsertData(DEFAULTDATA);
+        // clearAndInsertData(DEFAULTDATA);
     })
     .catch(err => console.log(err))
 
@@ -50,6 +51,7 @@ app.use('/api/rules',ruleRoutes);
 app.use('/api/register',validateMailRoutes);
 app.use('/api/sexs',sexRoutes);
 app.use('/api/car-costumers',carCostumerRoutes);
+app.use('/api/services-client',serviceClientRoutes);
 
 
 

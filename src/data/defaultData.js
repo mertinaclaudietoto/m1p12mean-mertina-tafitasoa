@@ -2,12 +2,13 @@ const CarType = require("../models/carType");
 const engineTypes = require("../models/engineType");
 const sizeTypes = require("../models/sizeType");
 const weigthTypes = require("../models/weigthType");
-const carClients = require("../models/carCostumer");
+const carClients = require("../models/client/carCostumer");
 const service = require("../models/service");
 const { Types } = require("mongoose");
 const Emp = require("../models/emp/emp");
 const Rule = require("../models/emp/rule");
 const Sex = require("../models/emp/sex");
+const serviceClient = require("../models/client/servicesClient");
 
 const DEFAULTDATA = [
   {
@@ -299,11 +300,11 @@ const DEFAULTDATA = [
         version: "2025",
         datesortie: new Date("2025-01-01"),
         empathement: "AB-123-CD",
-        carType: new Types.ObjectId("000000000000000000000001"), // "Berline"
-        engineType: new Types.ObjectId("000000000000000000000001"), // "Essence"
-        sizeType: new Types.ObjectId("000000000000000000000001"), // "Petite"
-        weigthType: new Types.ObjectId("000000000000000000000001"), // "Légère"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000001"),  
+        engineType: new Types.ObjectId("000000000000000000000001"),  
+        sizeType: new Types.ObjectId("000000000000000000000001"), 
+        weigthType: new Types.ObjectId("000000000000000000000001"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
       },
       {
         _id: new Types.ObjectId("000000000000000000000002"),
@@ -314,11 +315,11 @@ const DEFAULTDATA = [
         version: "2024",
         datesortie: new Date("2024-01-01"),
         empathement: "EF-456-GH",
-        carType: new Types.ObjectId("000000000000000000000002"), // "Break"
-        engineType: new Types.ObjectId("000000000000000000000002"), // "Diesel"
-        sizeType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
-        weigthType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000002"),  
+        engineType: new Types.ObjectId("000000000000000000000002"),  
+        sizeType: new Types.ObjectId("000000000000000000000002"),  
+        weigthType: new Types.ObjectId("000000000000000000000002"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
       },
       {
         _id: new Types.ObjectId("000000000000000000000003"),
@@ -329,11 +330,11 @@ const DEFAULTDATA = [
         version: "2023",
         datesortie: new Date("2023-01-01"),
         empathement: "IJ-789-KL",
-        carType: new Types.ObjectId("000000000000000000000008"), // "SUV"
-        engineType: new Types.ObjectId("000000000000000000000006"), // "Électrique CC"
-        sizeType: new Types.ObjectId("000000000000000000000003"), // "Grande"
-        weigthType: new Types.ObjectId("000000000000000000000003"), // "Lourde"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000008"),  
+        engineType: new Types.ObjectId("000000000000000000000006"),  
+        sizeType: new Types.ObjectId("000000000000000000000003"), 
+        weigthType: new Types.ObjectId("000000000000000000000003"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
       },
       {
         _id: new Types.ObjectId("000000000000000000000004"),
@@ -344,11 +345,11 @@ const DEFAULTDATA = [
         version: "2022",
         datesortie: new Date("2022-01-01"),
         empathement: "MN-012-OP",
-        carType: new Types.ObjectId("000000000000000000000003"), // "Coupé"
-        engineType: new Types.ObjectId("000000000000000000000004"), // "Hybride Parallèle"
-        sizeType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
-        weigthType: new Types.ObjectId("000000000000000000000001"), // "Légère"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000003"),  
+        engineType: new Types.ObjectId("000000000000000000000004"),  
+        sizeType: new Types.ObjectId("000000000000000000000002"),  
+        weigthType: new Types.ObjectId("000000000000000000000001"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
       },
       {
         _id: new Types.ObjectId("000000000000000000000010"),
@@ -359,11 +360,11 @@ const DEFAULTDATA = [
         version: "2021",
         datesortie: new Date("2021-01-01"),
         empathement: "QR-345-ST",
-        carType: new Types.ObjectId("000000000000000000000004"), // "Cabriolet"
-        engineType: new Types.ObjectId("000000000000000000000005"), // "Hybride Plug-in"
-        sizeType: new Types.ObjectId("000000000000000000000003"), // "Grande"
-        weigthType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000004"),  
+        engineType: new Types.ObjectId("000000000000000000000005"),  
+        sizeType: new Types.ObjectId("000000000000000000000003"), 
+        weigthType: new Types.ObjectId("000000000000000000000002"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
       },
       {
         _id: new Types.ObjectId("000000000000000000000005"),
@@ -374,11 +375,11 @@ const DEFAULTDATA = [
         version: "2020",
         datesortie: new Date("2020-01-01"),
         empathement: "UV-678-WX",
-        carType: new Types.ObjectId("000000000000000000000008"), // "SUV"
-        engineType: new Types.ObjectId("000000000000000000000007"), // "Électrique Synchrone"
-        sizeType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
-        weigthType: new Types.ObjectId("000000000000000000000003"), // "Lourde"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000008"),  
+        engineType: new Types.ObjectId("000000000000000000000007"),  
+        sizeType: new Types.ObjectId("000000000000000000000002"),  
+        weigthType: new Types.ObjectId("000000000000000000000003"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
       },
       {
         _id: new Types.ObjectId("000000000000000000000006"),
@@ -389,11 +390,11 @@ const DEFAULTDATA = [
         version: "2019",
         datesortie: new Date("2019-01-01"),
         empathement: "YZ-901-AB",
-        carType: new Types.ObjectId("000000000000000000000005"), // "Hatchback"
-        engineType: new Types.ObjectId("000000000000000000000003"), // "Hybride Série"
-        sizeType: new Types.ObjectId("000000000000000000000001"), // "Petite"
-        weigthType: new Types.ObjectId("000000000000000000000001"), // "Légère"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000005"), 
+        engineType: new Types.ObjectId("000000000000000000000003"),
+        sizeType: new Types.ObjectId("000000000000000000000001"), 
+        weigthType: new Types.ObjectId("000000000000000000000001"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
       },
       {
         _id: new Types.ObjectId("000000000000000000000007"),
@@ -404,11 +405,11 @@ const DEFAULTDATA = [
         version: "2018",
         datesortie: new Date("2018-01-01"),
         empathement: "CD-234-EF",
-        carType: new Types.ObjectId("000000000000000000000006"), // "Roadster"
-        engineType: new Types.ObjectId("000000000000000000000002"), // "Diesel"
-        sizeType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
-        weigthType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000006"), 
+        engineType: new Types.ObjectId("000000000000000000000002"),  
+        sizeType: new Types.ObjectId("000000000000000000000002"),  
+        weigthType: new Types.ObjectId("000000000000000000000002"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
       },
       {
         _id: new Types.ObjectId("000000000000000000000008"),
@@ -419,11 +420,12 @@ const DEFAULTDATA = [
         version: "2017",
         datesortie: new Date("2017-01-01"),
         empathement: "GH-567-IJ",
-        carType: new Types.ObjectId("000000000000000000000007"), // "Limousine"
-        engineType: new Types.ObjectId("000000000000000000000008"), // "Électrique Asynchrone"
-        sizeType: new Types.ObjectId("000000000000000000000003"), // "Grande"
-        weigthType: new Types.ObjectId("000000000000000000000001"), // "Légère"
-        costumer: new Types.ObjectId("000000000000000000000005"),
+        carType: new Types.ObjectId("000000000000000000000007"),  
+        engineType: new Types.ObjectId("000000000000000000000008"),  
+        sizeType: new Types.ObjectId("000000000000000000000003"),
+        weigthType: new Types.ObjectId("000000000000000000000001"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
+
       },
       {
         _id: new Types.ObjectId("000000000000000000000009"),
@@ -434,13 +436,109 @@ const DEFAULTDATA = [
         version: "2016",
         datesortie: new Date("2016-01-01"),
         empathement: "KL-890-MN",
-        carType: new Types.ObjectId("000000000000000000000009"), // "Crossover"
-        engineType: new Types.ObjectId("000000000000000000000009"), // "Hydrogène"
-        sizeType: new Types.ObjectId("000000000000000000000001"), // "Petite"
-        weigthType: new Types.ObjectId("000000000000000000000003"), // "Lourde"
-        costumer: new Types.ObjectId("000000000000000000000005"),
-      },
-    ],
+        carType: new Types.ObjectId("000000000000000000000009"),  
+        engineType: new Types.ObjectId("000000000000000000000009"),  
+        sizeType: new Types.ObjectId("000000000000000000000001"),  
+        weigthType: new Types.ObjectId("000000000000000000000003"),  
+        costumer:new Types.ObjectId("000000000000000000000005")
+      }
+    ] 
+  },
+  {
+    model: service, 
+    data: [
+        { _id: new Types.ObjectId("000000000000000000000001"), name: "Vidange d'huile",
+          sizeTypePrice: 1000,
+          carTypePrice:2000 ,
+          engineTypePrice:3000 ,
+          weigthTypePrice:4000
+         },
+        { _id: new Types.ObjectId("000000000000000000000002"), name: "Réparation de freins"
+          ,sizeTypePrice: 1000,
+          carTypePrice:2000 ,
+          engineTypePrice:3000 ,
+          weigthTypePrice:4000
+         },
+        { _id: new Types.ObjectId("000000000000000000000003"), name: "Changement de pneus",
+          sizeTypePrice: 1000,
+          carTypePrice:2000 ,
+          engineTypePrice:3000 ,
+          weigthTypePrice:4000
+         },
+        { _id: new Types.ObjectId("000000000000000000000004"), name: "Diagnostic électronique" 
+          ,sizeTypePrice: 1000,
+          carTypePrice:2000 ,
+          engineTypePrice:3000 ,
+          weigthTypePrice:4000
+         },
+        { _id: new Types.ObjectId("000000000000000000000005"), name: "Entretien du moteur" 
+          ,sizeTypePrice: 1000,
+          carTypePrice:2000 ,
+          engineTypePrice:3000 ,
+          weigthTypePrice:4000
+         },
+        { _id: new Types.ObjectId("000000000000000000000006"), name: "Réparation de carrosserie" ,
+          sizeTypePrice: 1000,
+          carTypePrice:2000 ,
+          engineTypePrice:3000 ,
+          weigthTypePrice:4000
+         },
+      ]
+  },
+  { 
+    model: serviceClient, 
+    data: [
+      {
+        _id: new Types.ObjectId("000000000000000000000001"),
+        idcustomer: new Types.ObjectId("000000000000000000000001"),
+        idcarcustomer: new Types.ObjectId("000000000000000000000001"),
+        datedebut: "2024-03-01T08:00:00.000Z",
+        datefin: "2024-03-05T18:00:00.000Z",
+        datedemande:"2024-03-05T18:00:00.000Z",
+        payed: true,
+        detail: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            idmechanic: new Types.ObjectId("000000000000000000000001"),
+            prix: 150,
+            datedebut: "2024-03-01T09:00:00.000Z",
+            datefin:null,
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            idmechanic: new Types.ObjectId("000000000000000000000002"),
+            prix: 200,
+            datedebut: "2024-03-02T10:00:00.000Z",
+            datefin: "2024-03-02T14:00:00.000Z"
+          }
+        ]
+      },      {
+        _id: new Types.ObjectId("000000000000000000000002"),
+        idcustomer: new Types.ObjectId("000000000000000000000002"),
+        idcarcustomer: new Types.ObjectId("000000000000000000000001"),
+        datedebut: null,
+        datefin:null,
+        datedemande:"2024-03-05T18:00:00.000Z",
+        payed: true,
+        detail: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            idmechanic: new Types.ObjectId("000000000000000000000001"),
+            prix: 150,
+            datedebut: "2024-03-01T09:00:00.000Z",
+            datefin:null,
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            idmechanic: new Types.ObjectId("000000000000000000000002"),
+            prix: 200,
+            datedebut: "2024-03-02T10:00:00.000Z",
+            datefin: "2024-03-02T14:00:00.000Z"
+          }
+        ]
+      }
+      
+    ] 
   },
 ];
 

@@ -10,7 +10,6 @@ router.post("/", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
 router.get("/", async (req, res) => {
   try {
     const carTypes = await CarType.find();
