@@ -1,3 +1,4 @@
+const easyinvoice = require('easyinvoice');
 const express = require("express");
 const mongoose = require("mongoose");
 const puppeteer = require("puppeteer");
@@ -21,7 +22,7 @@ const sexRoutes = require('./src/routes/emp/Sex');
 const carCostumerRoutes = require('./src/routes/carcostumer');
 const serviceClientRoutes = require('./src/routes/client/serviceClients');
 
-
+const PDFDocument = require("pdfkit");
 const bcrypt = require("bcrypt");
 
 app
@@ -31,7 +32,65 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.get('/generate-invoice', async (req, res) => {
+    try {
+        // Données de la facture
+        const data = {
+            "documentTitle": "FACTURE",
+            "currency": "EUR",
+            "taxNotation": "VAT",
+            "marginTop": 25,
+            "marginRight": 25,
+            "marginLeft": 25,
+            "marginBottom": 25,
+            "sender": {
+                "company": "Ma Société",
+                "address": "123 Rue des Exemples",
+                "zip": "75000",
+                "city": "Paris",
+                "country": "France"
+            },
+            "client": {
+                "company": "Client Entreprise",
+                "address": "456 Avenue Client",
+                "zip": "69000",
+                "city": "Lyon",
+                "country": "France"
+            },
+            "invoiceNumber": "2024-001",
+            "invoiceDate": "2024-03-26",
+            "products": [
+                {
+                    "quantity": 2,
+                    "description": "Ordinateur portable",
+                    "tax": 20,
+                    "price": 800
+                },
+                {
+                    "quantity": 1,
+                    "description": "Écran 27 pouces",
+                    "tax": 20,
+                    "price": 300
+                }
+            ],
+            "bottomNotice": "Merci pour votre confiance !"
+        };
 
+        // Générer la facture
+        const result = await easyinvoice.createInvoice(data);
+        
+        // Configurer l'en-tête pour le téléchargement
+        res.setHeader('Content-Disposition', 'attachment; filename="facture.pdf"');
+        res.setHeader('Content-Type', 'application/pdf');
+
+        // Envoyer le fichier PDF au client
+        res.send(Buffer.from(result.pdf, 'base64'));
+
+    } catch (error) {
+        console.error("Erreur lors de la génération de la facture :", error);
+        res.status(500).json({ message: "Erreur interne du serveur" });
+    }
+});
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connecté")

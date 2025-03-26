@@ -1,5 +1,5 @@
 const ServicePrice = require("../dtos/servicePrice");
-const CarCostumer = require("../models/carCostumer");
+const CarCostumer = require("../models/client/carCostumer");
 const CarType = require("../models/carType");
 const EngineType = require("../models/engineType");
 const Service = require("../models/service");

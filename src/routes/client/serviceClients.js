@@ -3,8 +3,57 @@ const router = express.Router();
 const serviceClients=require('../../models/client/servicesClient');
 const emp=require('../../models/emp/emp');
 const {RULE}=require('../../data/RULE');
-const auth= require('../../midelewares/costumer')
+const auth= require('../../midelewares/manager');
 const { Types } = require('mongoose');
+const InvoiceData = require('../../models/client/invoice');
+const easyinvoice = require('easyinvoice');
+const {  sendValidationEmailWithInvoice } = require('../../routes/email/mailer');
+
+
+router.get('/facture-service/:id', async (req, res) => {
+    try {
+        const invoice = new InvoiceData();  // Crée une nouvelle instance d'InvoiceData
+        const clientDetails = await serviceClients.findById(req.params.id)
+            .populate("idcustomer", "name firstName login") 
+            .populate("idcarcustomer") 
+            .populate({
+                path: "detail.idservice",
+                select: "name",
+            })
+            .populate({
+                path: "detail.idmechanic",
+                select: "name firstName", 
+            });
+
+        // Vérifie si clientDetails et ses propriétés existent avant de les utiliser
+        if (!clientDetails || !clientDetails.idcustomer) {
+            return res.status(404).json({ message: "Client non trouvé" });
+        }
+       
+        invoice.client.company = `${clientDetails.idcustomer.name} ${clientDetails.idcustomer.firstName}`;
+        invoice.invoiceNumber = req.params.id;
+        invoice.invoiceDate = new Date();
+
+       
+        invoice.products = clientDetails.detail.map(value => {
+            return {
+                quantity: 1,
+                description: value.idservice.name,
+                tax: 20,
+                price: value.prix
+            };
+        });
+
+        
+        const result = await easyinvoice.createInvoice(invoice);    
+
+     
+        sendValidationEmailWithInvoice(clientDetails.login,`${clientDetails.idcustomer.name} ${clientDetails.idcustomer.firstName}`,req.params.id,Buffer.from(result.pdf, 'base64'))
+    } catch (error) {
+        // Gestion des erreurs
+        res.status(500).json({ message: error.message });
+    }
+});
 
 
 router.get('/service-in-progress', async (req, res) => {
@@ -119,7 +168,7 @@ router.get('/:id/:skip/:limit',auth, async (req, res) => {
 
 router.put('/:id',auth, async (req, res) => {
     try {
-        const value = await Empcar.findByIdAndUpdate(req.params.id,
+        const value = await serviceClients.findByIdAndUpdate(req.params.id,
         req.body, { new: true });
         res.json(value);
     } catch (error) {
@@ -129,7 +178,7 @@ router.put('/:id',auth, async (req, res) => {
 
 router.delete('/:id',auth, async (req, res) => {
     try {
-        await Empcar.findByIdAndDelete(req.params.id);
+        await serviceClients.findByIdAndDelete(req.params.id);
         res.json({ message: "value  delete " });
     } catch (error) {
         res.status(500).json({ message: error.message });
