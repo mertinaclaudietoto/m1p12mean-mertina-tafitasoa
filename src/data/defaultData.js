@@ -359,6 +359,30 @@ const DEFAULTDATA = [
             datefin: "2024-03-02T14:00:00.000Z"
           }
         ]
+      },      {
+        _id: new Types.ObjectId("000000000000000000000002"),
+        idcustomer: new Types.ObjectId("000000000000000000000002"),
+        idcarcustomer: new Types.ObjectId("000000000000000000000001"),
+        datedebut: null,
+        datefin:null,
+        datedemande:"2024-03-05T18:00:00.000Z",
+        payed: true,
+        detail: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            idmechanic: new Types.ObjectId("000000000000000000000001"),
+            prix: 150,
+            datedebut: "2024-03-01T09:00:00.000Z",
+            datefin:null,
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            idmechanic: new Types.ObjectId("000000000000000000000002"),
+            prix: 200,
+            datedebut: "2024-03-02T10:00:00.000Z",
+            datefin: "2024-03-02T14:00:00.000Z"
+          }
+        ]
       }
       
     ] 

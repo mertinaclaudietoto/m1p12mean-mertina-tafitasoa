@@ -10,10 +10,16 @@ const { Types } = require('mongoose');
 router.get('/service-in-progress', async (req, res) => {
     try {
         const values = await serviceClients.find({
-            "detail.datefin": { $eq: null }
+            $and: [
+                { "detail.datefin": null }, 
+                { "datedebut": { $ne: null } } 
+            ]
         })
         .populate("idcustomer", "name firstName picture") 
-        .populate("idcarcustomer", "picture brand model");
+        .populate("idcarcustomer", "picture brand model")
+        .populate({ path: "detail.idservice", select: "name" }) 
+        .populate({ path: "detail.idmechanic", select: "name firstName picture" }) ;
+
         res.json(values);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -26,7 +32,10 @@ router.get('/service-in-waiting', async (req, res) => {
             "datedebut": { $eq: null }
         })
         .populate("idcustomer", "name firstName picture") 
-        .populate("idcarcustomer", "picture brand model");
+        .populate("idcarcustomer", "picture brand model")
+        .populate({ path: "detail.idservice", select: "name" }) 
+        .populate({ path: "detail.idmechanic", select: "name firstName picture" }) ;
+
         res.json(values);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -45,14 +54,16 @@ router.get('/free-mechanic', async (req, res) => {
             { rule:RULE[2]._id }, 
             { _id: 1, name: 1, firstName: 1, picture: 1 } 
         );
-        const set2 = new Set(values.map(item => item._id)); 
-        mechanic= mechanic.filter(item => !set2.has(item._id)); 
-
+        const set2 = new Set(values.map(item => item._id.toString())); 
+        
+        mechanic = mechanic.filter(item => !set2.has(item._id.toString()));
+        
         res.json(mechanic);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
 router.post('/',async (req, res) => {
     try {
         const values = new serviceClients(req.body);

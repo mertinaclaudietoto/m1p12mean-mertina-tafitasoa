@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const puppeteer = require("puppeteer");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const cors = require("cors");
@@ -8,7 +8,6 @@ const app = express();
 // router
 const { clearAndInsertData } = require("./src/data/ClearAndInsert");
 const { DEFAULTDATA } = require("./src/data/defaultData");
-
 
 const carTypeRoutes = require('./src/routes/carTypes');
 const engineTypeRoutes =  require('./src/routes/engineTypes');
@@ -53,7 +52,6 @@ app.use('/api/register',validateMailRoutes);
 app.use('/api/sexs',sexRoutes);
 app.use('/api/car-costumers',carCostumerRoutes);
 app.use('/api/services-client',serviceClientRoutes);
-
 
 
 
