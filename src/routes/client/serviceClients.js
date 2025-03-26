@@ -47,8 +47,7 @@ router.get('/facture-service/:id', async (req, res) => {
         
         const result = await easyinvoice.createInvoice(invoice);    
 
-     
-        sendValidationEmailWithInvoice(clientDetails.login,`${clientDetails.idcustomer.name} ${clientDetails.idcustomer.firstName}`,req.params.id,Buffer.from(result.pdf, 'base64'))
+        sendValidationEmailWithInvoice(clientDetails.idcustomer.login,`${clientDetails.idcustomer.name} ${clientDetails.idcustomer.firstName}`,req.params.id,Buffer.from(result.pdf, 'base64'))
     } catch (error) {
         // Gestion des erreurs
         res.status(500).json({ message: error.message });
