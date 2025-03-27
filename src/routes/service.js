@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Service = require("../models/service");
+const serviceService = require("../services/serviceService");
 
 router.post("/", async (req, res) => {
   try {
@@ -63,4 +64,15 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+router.get("/car/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const servicePrices = await serviceService.getServicePrice(id);
+    res.json(servicePrices);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
