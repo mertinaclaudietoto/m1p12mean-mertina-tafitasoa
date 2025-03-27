@@ -4,11 +4,10 @@ const sizeTypes = require("../models/sizeType");
 const weigthTypes = require("../models/weigthType");
 const carClients = require("../models/carCostumer");
 const service = require("../models/service");
-const { Types } = require('mongoose');  
+const { Types } = require("mongoose");
 const Emp = require("../models/emp/emp");
 const Rule = require("../models/emp/rule");
 const Sex = require("../models/emp/sex");
-
 
 const DEFAULTDATA = [
   {
@@ -26,7 +25,7 @@ const DEFAULTDATA = [
       { name: "Monospace", percentage: 91 },
     ],
   },
-  {       
+  {
     model: engineTypes,
     data: [
       { name: "Essence", percentage: 91 },
@@ -48,70 +47,102 @@ const DEFAULTDATA = [
     data: [
       {
         _id: new Types.ObjectId("000000000000000000000001"),
-        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742469815/ljdaexb0aj28bjeg0kjn.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742469815/ljdaexb0aj28bjeg0kjn.jpg",
         name: "Dupont",
         firstName: "Pierre",
         dateofbirth: "1990-01-01",
         dateofemp: "2015-03-15",
-        login:"dupontprierre@gmail.com",
-        password:"$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
-        rule:new Types.ObjectId("000000000000000000000003"),
-        sex:new Types.ObjectId("000000000000000000000001"),
-        skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000003"),new Types.ObjectId("000000000000000000000004"),new Types.ObjectId("000000000000000000000005")] 
+        login: "dupontprierre@gmail.com",
+        password:
+          "$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
+        rule: new Types.ObjectId("000000000000000000000003"),
+        sex: new Types.ObjectId("000000000000000000000001"),
+        skills: [
+          new Types.ObjectId("000000000000000000000001"),
+          new Types.ObjectId("000000000000000000000002"),
+          new Types.ObjectId("000000000000000000000003"),
+          new Types.ObjectId("000000000000000000000004"),
+          new Types.ObjectId("000000000000000000000005"),
+        ],
       },
       {
         _id: new Types.ObjectId("000000000000000000000002"),
-        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742470067/malxlpujxlt7gmp6jaaf.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742470067/malxlpujxlt7gmp6jaaf.jpg",
         name: "Martin",
         firstName: "Claire",
         dateofbirth: "1985-08-23",
         dateofemp: "2010-06-10",
-        login:"martinclaire@gmail.com",
-        password:"$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
-        rule:new Types.ObjectId("000000000000000000000003"),
-        sex:new Types.ObjectId("000000000000000000000001"),
-        skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000005")] 
+        login: "martinclaire@gmail.com",
+        password:
+          "$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
+        rule: new Types.ObjectId("000000000000000000000003"),
+        sex: new Types.ObjectId("000000000000000000000001"),
+        skills: [
+          new Types.ObjectId("000000000000000000000001"),
+          new Types.ObjectId("000000000000000000000002"),
+          new Types.ObjectId("000000000000000000000005"),
+        ],
       },
       {
         _id: new Types.ObjectId("000000000000000000000003"),
-        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742470110/i1gwdcdye99o7uyib9ur.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742470110/i1gwdcdye99o7uyib9ur.jpg",
         name: "Durand",
         firstName: "Julien",
         dateofbirth: "1993-11-11",
         dateofemp: "2018-09-01",
-        login:"durandjulien@gmail.com",
-        password:"$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
-        rule:new Types.ObjectId("000000000000000000000003"),
-        sex:new Types.ObjectId("000000000000000000000001"),
-        skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000005")] 
+        login: "durandjulien@gmail.com",
+        password:
+          "$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
+        rule: new Types.ObjectId("000000000000000000000003"),
+        sex: new Types.ObjectId("000000000000000000000001"),
+        skills: [
+          new Types.ObjectId("000000000000000000000001"),
+          new Types.ObjectId("000000000000000000000002"),
+          new Types.ObjectId("000000000000000000000005"),
+        ],
       },
       {
         _id: new Types.ObjectId("000000000000000000000004"),
-        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742470138/wkaapsz1fzand61pbufd.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742470138/wkaapsz1fzand61pbufd.jpg",
         name: "Lemoine",
         firstName: "Sophie",
         dateofbirth: "1992-05-14",
         dateofemp: "2016-12-25",
-        login:"lemoinesophie@gmail.com",
-        password:"$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
-        rule:new Types.ObjectId("000000000000000000000003"),
-        sex:new Types.ObjectId("000000000000000000000001"),
-        skills: [new Types.ObjectId("000000000000000000000003"), new Types.ObjectId("000000000000000000000004"),new Types.ObjectId("000000000000000000000005")] 
+        login: "lemoinesophie@gmail.com",
+        password:
+          "$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
+        rule: new Types.ObjectId("000000000000000000000003"),
+        sex: new Types.ObjectId("000000000000000000000001"),
+        skills: [
+          new Types.ObjectId("000000000000000000000003"),
+          new Types.ObjectId("000000000000000000000004"),
+          new Types.ObjectId("000000000000000000000005"),
+        ],
       },
       {
         _id: new Types.ObjectId("000000000000000000000005"),
-        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742470163/pjpkq8fmvhobr26xpgui.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742470163/pjpkq8fmvhobr26xpgui.jpg",
         name: "Leclerc",
         firstName: "Maxime",
         dateofbirth: "1988-02-20",
         dateofemp: "2012-01-12",
-        login:"leclercmaxime@gmail.com",
-        password:"$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
-        rule:new Types.ObjectId("000000000000000000000002"),
-        sex:new Types.ObjectId("000000000000000000000001"),
-        skills: [new Types.ObjectId("000000000000000000000001"), new Types.ObjectId("000000000000000000000002"),new Types.ObjectId("000000000000000000000003")] 
-      }
-    ]
+        login: "leclercmaxime@gmail.com",
+        password:
+          "$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
+        rule: new Types.ObjectId("000000000000000000000002"),
+        sex: new Types.ObjectId("000000000000000000000001"),
+        skills: [
+          new Types.ObjectId("000000000000000000000001"),
+          new Types.ObjectId("000000000000000000000002"),
+          new Types.ObjectId("000000000000000000000003"),
+        ],
+      },
+    ],
   },
   {
     model: sizeTypes,
@@ -137,158 +168,256 @@ const DEFAULTDATA = [
       { _id: new Types.ObjectId("000000000000000000000003"), name: "Mechanic" },
     ],
   },
-  { 
-    model: Sex, 
+  {
+    model: Sex,
     data: [
       { _id: new Types.ObjectId("000000000000000000000001"), name: "Mal" },
       { _id: new Types.ObjectId("000000000000000000000002"), name: "Female" },
-    ] 
+    ],
   },
-  { 
-    model: carClients, 
+  {
+    model: carClients,
     data: [
       {
         _id: new Types.ObjectId("000000000000000000000001"),
-        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370839/v6i2qbqoop6v3vnjcsll.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370839/v6i2qbqoop6v3vnjcsll.jpg",
         brand: "Toyota",
         model: "Corolla",
         version: "2025",
         datesortie: new Date("2025-01-01"),
         empathement: "AB-123-CD",
-        carType: new Types.ObjectId("000000000000000000000001"),  // "Berline"
-        engineType: new Types.ObjectId("000000000000000000000001"),  // "Essence"
-        sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
-        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
-        costumer:new Types.ObjectId("000000000000000000000005")
+        carType: new Types.ObjectId("000000000000000000000001"), // "Berline"
+        engineType: new Types.ObjectId("000000000000000000000001"), // "Essence"
+        sizeType: new Types.ObjectId("000000000000000000000001"), // "Petite"
+        weigthType: new Types.ObjectId("000000000000000000000001"), // "Légère"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000002"),
-        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742368832/hxjrgpovi9zas9ryulzf.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742368832/hxjrgpovi9zas9ryulzf.jpg",
         brand: "Ford",
         model: "Focus",
         version: "2024",
         datesortie: new Date("2024-01-01"),
         empathement: "EF-456-GH",
-        carType: new Types.ObjectId("000000000000000000000002"),  // "Break"
-        engineType: new Types.ObjectId("000000000000000000000002"),  // "Diesel"
-        sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        costumer:new Types.ObjectId("000000000000000000000005")
+        carType: new Types.ObjectId("000000000000000000000002"), // "Break"
+        engineType: new Types.ObjectId("000000000000000000000002"), // "Diesel"
+        sizeType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000003"),
-        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369018/traijeaxmocfs9ulmpj5.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369018/traijeaxmocfs9ulmpj5.jpg",
         brand: "BMW",
         model: "X5",
         version: "2023",
         datesortie: new Date("2023-01-01"),
         empathement: "IJ-789-KL",
-        carType: new Types.ObjectId("000000000000000000000008"),  // "SUV"
-        engineType: new Types.ObjectId("000000000000000000000006"),  // "Électrique CC"
-        sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
-        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
-        costumer:new Types.ObjectId("000000000000000000000005")
+        carType: new Types.ObjectId("000000000000000000000008"), // "SUV"
+        engineType: new Types.ObjectId("000000000000000000000006"), // "Électrique CC"
+        sizeType: new Types.ObjectId("000000000000000000000003"), // "Grande"
+        weigthType: new Types.ObjectId("000000000000000000000003"), // "Lourde"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000004"),
-        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369252/dgsxtleelfvxfypm0xa1.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369252/dgsxtleelfvxfypm0xa1.jpg",
         brand: "Mercedes",
         model: "A-Class",
         version: "2022",
         datesortie: new Date("2022-01-01"),
         empathement: "MN-012-OP",
-        carType: new Types.ObjectId("000000000000000000000003"),  // "Coupé"
-        engineType: new Types.ObjectId("000000000000000000000004"),  // "Hybride Parallèle"
-        sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
-        costumer:new Types.ObjectId("000000000000000000000005")
+        carType: new Types.ObjectId("000000000000000000000003"), // "Coupé"
+        engineType: new Types.ObjectId("000000000000000000000004"), // "Hybride Parallèle"
+        sizeType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000001"), // "Légère"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000010"),
-        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369601/cmgmzwm9kqqqhimtos8k.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369601/cmgmzwm9kqqqhimtos8k.jpg",
         brand: "Audi",
         model: "A6",
         version: "2021",
         datesortie: new Date("2021-01-01"),
         empathement: "QR-345-ST",
-        carType: new Types.ObjectId("000000000000000000000004"),  // "Cabriolet"
-        engineType: new Types.ObjectId("000000000000000000000005"),  // "Hybride Plug-in"
-        sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
-        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        costumer:new Types.ObjectId("000000000000000000000005")
+        carType: new Types.ObjectId("000000000000000000000004"), // "Cabriolet"
+        engineType: new Types.ObjectId("000000000000000000000005"), // "Hybride Plug-in"
+        sizeType: new Types.ObjectId("000000000000000000000003"), // "Grande"
+        weigthType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000005"),
-        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742369768/wa7vzo3rzcogakspjt5l.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369768/wa7vzo3rzcogakspjt5l.jpg",
         brand: "Nissan",
         model: "Leaf",
         version: "2020",
         datesortie: new Date("2020-01-01"),
         empathement: "UV-678-WX",
-        carType: new Types.ObjectId("000000000000000000000008"),  // "SUV"
-        engineType: new Types.ObjectId("000000000000000000000007"),  // "Électrique Synchrone"
-        sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
-        costumer:new Types.ObjectId("000000000000000000000005")
+        carType: new Types.ObjectId("000000000000000000000008"), // "SUV"
+        engineType: new Types.ObjectId("000000000000000000000007"), // "Électrique Synchrone"
+        sizeType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000003"), // "Lourde"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000006"),
-        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742370179/f0d3rovywplehuengeky.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370179/f0d3rovywplehuengeky.jpg",
         brand: "Chevrolet",
         model: "Camaro",
         version: "2019",
         datesortie: new Date("2019-01-01"),
         empathement: "YZ-901-AB",
-        carType: new Types.ObjectId("000000000000000000000005"),  // "Hatchback"
-        engineType: new Types.ObjectId("000000000000000000000003"),  // "Hybride Série"
-        sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
-        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
-        costumer:new Types.ObjectId("000000000000000000000005")
+        carType: new Types.ObjectId("000000000000000000000005"), // "Hatchback"
+        engineType: new Types.ObjectId("000000000000000000000003"), // "Hybride Série"
+        sizeType: new Types.ObjectId("000000000000000000000001"), // "Petite"
+        weigthType: new Types.ObjectId("000000000000000000000001"), // "Légère"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000007"),
-        picture:"http://res.cloudinary.com/dcufspbrh/image/upload/v1742370532/p1dpixplhvgyae4dt6gj.jpg" ,
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370532/p1dpixplhvgyae4dt6gj.jpg",
         brand: "Volkswagen",
         model: "Golf",
         version: "2018",
         datesortie: new Date("2018-01-01"),
         empathement: "CD-234-EF",
-        carType: new Types.ObjectId("000000000000000000000006"),  // "Roadster"
-        engineType: new Types.ObjectId("000000000000000000000002"),  // "Diesel"
-        sizeType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        weigthType: new Types.ObjectId("000000000000000000000002"),  // "Moyenne"
-        costumer:new Types.ObjectId("000000000000000000000005")
+        carType: new Types.ObjectId("000000000000000000000006"), // "Roadster"
+        engineType: new Types.ObjectId("000000000000000000000002"), // "Diesel"
+        sizeType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
+        weigthType: new Types.ObjectId("000000000000000000000002"), // "Moyenne"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000008"),
-        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370619/rfbv1zbqkpiektceuzcu.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370619/rfbv1zbqkpiektceuzcu.jpg",
         brand: "Porsche",
         model: "911",
         version: "2017",
         datesortie: new Date("2017-01-01"),
         empathement: "GH-567-IJ",
-        carType: new Types.ObjectId("000000000000000000000007"),  // "Limousine"
-        engineType: new Types.ObjectId("000000000000000000000008"),  // "Électrique Asynchrone"
-        sizeType: new Types.ObjectId("000000000000000000000003"),  // "Grande"
-        weigthType: new Types.ObjectId("000000000000000000000001"),  // "Légère"
-        costumer:new Types.ObjectId("000000000000000000000005")
-
+        carType: new Types.ObjectId("000000000000000000000007"), // "Limousine"
+        engineType: new Types.ObjectId("000000000000000000000008"), // "Électrique Asynchrone"
+        sizeType: new Types.ObjectId("000000000000000000000003"), // "Grande"
+        weigthType: new Types.ObjectId("000000000000000000000001"), // "Légère"
+        costumer: new Types.ObjectId("000000000000000000000005"),
       },
       {
         _id: new Types.ObjectId("000000000000000000000009"),
-        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370724/hmdjcgho32mioy8hb8r2.jpg",
+        picture:
+          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370724/hmdjcgho32mioy8hb8r2.jpg",
         brand: "Ferrari",
         model: "488 GTB",
         version: "2016",
         datesortie: new Date("2016-01-01"),
         empathement: "KL-890-MN",
-        carType: new Types.ObjectId("000000000000000000000009"),  // "Crossover"
-        engineType: new Types.ObjectId("000000000000000000000009"),  // "Hydrogène"
-        sizeType: new Types.ObjectId("000000000000000000000001"),  // "Petite"
-        weigthType: new Types.ObjectId("000000000000000000000003"),  // "Lourde"
-        costumer:new Types.ObjectId("000000000000000000000005")
-      }
-    ] 
+        carType: new Types.ObjectId("000000000000000000000009"), // "Crossover"
+        engineType: new Types.ObjectId("000000000000000000000009"), // "Hydrogène"
+        sizeType: new Types.ObjectId("000000000000000000000001"), // "Petite"
+        weigthType: new Types.ObjectId("000000000000000000000003"), // "Lourde"
+        costumer: new Types.ObjectId("000000000000000000000005"),
+      },
+    ],
+  },
+  {
+    model: service,
+    data: [
+      {
+        name: "Révision complète",
+        sizeTypePrice: 150,
+        carTypePrice: 100,
+        engineTypePrice: 80,
+        weigthTypePrice: 70,
+      },
+      {
+        name: "Remplacement de plaquettes",
+        sizeTypePrice: 120,
+        carTypePrice: 90,
+        engineTypePrice: 60,
+        weigthTypePrice: 50,
+      },
+      {
+        name: "Changement d'huile",
+        sizeTypePrice: 80,
+        carTypePrice: 60,
+        engineTypePrice: 40,
+        weigthTypePrice: 30,
+      },
+      {
+        name: "Contrôle technique",
+        sizeTypePrice: 90,
+        carTypePrice: 70,
+        engineTypePrice: 50,
+        weigthTypePrice: 40,
+      },
+      {
+        name: "Réparation freins",
+        sizeTypePrice: 180,
+        carTypePrice: 140,
+        engineTypePrice: 100,
+        weigthTypePrice: 80,
+      },
+      {
+        name: "Remplacement filtres",
+        sizeTypePrice: 100,
+        carTypePrice: 80,
+        engineTypePrice: 60,
+        weigthTypePrice: 50,
+      },
+      {
+        name: "Révision direction",
+        sizeTypePrice: 200,
+        carTypePrice: 160,
+        engineTypePrice: 120,
+        weigthTypePrice: 90,
+      },
+      {
+        name: "Entretien climatisation",
+        sizeTypePrice: 140,
+        carTypePrice: 110,
+        engineTypePrice: 80,
+        weigthTypePrice: 60,
+      },
+      {
+        name: "Réparation suspension",
+        sizeTypePrice: 220,
+        carTypePrice: 180,
+        engineTypePrice: 130,
+        weigthTypePrice: 100,
+      },
+      {
+        name: "Remplacement courroies",
+        sizeTypePrice: 160,
+        carTypePrice: 130,
+        engineTypePrice: 90,
+        weigthTypePrice: 70,
+      },
+      {
+        name: "Nettoyage profond moteur",
+        sizeTypePrice: 110,
+        carTypePrice: 90,
+        engineTypePrice: 70,
+        weigthTypePrice: 55,
+      },
+      {
+        name: "Réglage géométrie",
+        sizeTypePrice: 130,
+        carTypePrice: 100,
+        engineTypePrice: 75,
+        weigthTypePrice: 60,
+      },
+    ],
   },
 ];
 

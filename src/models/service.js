@@ -7,6 +7,7 @@ const serviceSchema = new mongoose.Schema(
     carTypePrice: { type: Number, required: true },
     engineTypePrice: { type: Number, required: true },
     weigthTypePrice: { type: Number, required: true },
+    etat: { type: Number, required: true, default: 0 },
   },
   { timestamps: true }
 );
