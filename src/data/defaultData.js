@@ -425,7 +425,6 @@ const DEFAULTDATA = [
         sizeType: new Types.ObjectId("000000000000000000000003"),
         weigthType: new Types.ObjectId("000000000000000000000001"),  
         costumer:new Types.ObjectId("000000000000000000000005")
-
       },
       {
         _id: new Types.ObjectId("000000000000000000000009"),
@@ -436,13 +435,102 @@ const DEFAULTDATA = [
         version: "2016",
         datesortie: new Date("2016-01-01"),
         empathement: "KL-890-MN",
-        carType: new Types.ObjectId("000000000000000000000009"),  
-        engineType: new Types.ObjectId("000000000000000000000009"),  
-        sizeType: new Types.ObjectId("000000000000000000000001"),  
-        weigthType: new Types.ObjectId("000000000000000000000003"),  
-        costumer:new Types.ObjectId("000000000000000000000005")
-      }
-    ] 
+        carType: new Types.ObjectId("000000000000000000000009"), // "Crossover"
+        engineType: new Types.ObjectId("000000000000000000000009"), // "Hydrogène"
+        sizeType: new Types.ObjectId("000000000000000000000001"), // "Petite"
+        weigthType: new Types.ObjectId("000000000000000000000003"), // "Lourde"
+        costumer: new Types.ObjectId("000000000000000000000005"),
+      },
+    ],
+  },
+  {
+    model: service,
+    data: [
+      {
+        name: "Révision complète",
+        sizeTypePrice: 150,
+        carTypePrice: 100,
+        engineTypePrice: 80,
+        weigthTypePrice: 70,
+      },
+      {
+        name: "Remplacement de plaquettes",
+        sizeTypePrice: 120,
+        carTypePrice: 90,
+        engineTypePrice: 60,
+        weigthTypePrice: 50,
+      },
+      {
+        name: "Changement d'huile",
+        sizeTypePrice: 80,
+        carTypePrice: 60,
+        engineTypePrice: 40,
+        weigthTypePrice: 30,
+      },
+      {
+        name: "Contrôle technique",
+        sizeTypePrice: 90,
+        carTypePrice: 70,
+        engineTypePrice: 50,
+        weigthTypePrice: 40,
+      },
+      {
+        name: "Réparation freins",
+        sizeTypePrice: 180,
+        carTypePrice: 140,
+        engineTypePrice: 100,
+        weigthTypePrice: 80,
+      },
+      {
+        name: "Remplacement filtres",
+        sizeTypePrice: 100,
+        carTypePrice: 80,
+        engineTypePrice: 60,
+        weigthTypePrice: 50,
+      },
+      {
+        name: "Révision direction",
+        sizeTypePrice: 200,
+        carTypePrice: 160,
+        engineTypePrice: 120,
+        weigthTypePrice: 90,
+      },
+      {
+        name: "Entretien climatisation",
+        sizeTypePrice: 140,
+        carTypePrice: 110,
+        engineTypePrice: 80,
+        weigthTypePrice: 60,
+      },
+      {
+        name: "Réparation suspension",
+        sizeTypePrice: 220,
+        carTypePrice: 180,
+        engineTypePrice: 130,
+        weigthTypePrice: 100,
+      },
+      {
+        name: "Remplacement courroies",
+        sizeTypePrice: 160,
+        carTypePrice: 130,
+        engineTypePrice: 90,
+        weigthTypePrice: 70,
+      },
+      {
+        name: "Nettoyage profond moteur",
+        sizeTypePrice: 110,
+        carTypePrice: 90,
+        engineTypePrice: 70,
+        weigthTypePrice: 55,
+      },
+      {
+        name: "Réglage géométrie",
+        sizeTypePrice: 130,
+        carTypePrice: 100,
+        engineTypePrice: 75,
+        weigthTypePrice: 60,
+      },
+    ]
   },
   {
     model: service, 
