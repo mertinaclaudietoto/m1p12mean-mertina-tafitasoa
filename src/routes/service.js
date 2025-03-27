@@ -21,6 +21,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id)
+      .where("etat")
+      .equals(0);
+    if (!service) {
+      return res.status(404).json({ message: "Service non trouvé" });
+    }
+    res.json(service);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.put("/:id", async (req, res) => {
   try {
     const service = await Service.findByIdAndUpdate(req.params.id, req.body, {
@@ -31,7 +45,7 @@ router.put("/:id", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-// Supprimer un article
+
 router.delete("/:id", async (req, res) => {
   try {
     const service = await Service.findById(req.params.id);
