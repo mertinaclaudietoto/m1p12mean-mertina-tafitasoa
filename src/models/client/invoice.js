@@ -41,6 +41,4 @@ class InvoiceData {
     }
 }
 module.exports = InvoiceData;
-// ✅ Utilisation
-const invoice = new InvoiceData();
-console.log(invoice);
+
