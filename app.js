@@ -1,3 +1,4 @@
+const easyinvoice = require('easyinvoice');
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
