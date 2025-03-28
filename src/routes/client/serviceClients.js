@@ -254,4 +254,69 @@ router.get("/task-start/:taskId", async (req, res) => {
   }
 });
 
+router.get("/task-finish/:taskId", async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const now = new Date();
+    const serviceClient = await serviceClients.findOne({
+      "detail._id": taskId,
+    });
+    if (!serviceClient) {
+      return res.status(404).json({ message: "Tâche non trouvée" });
+    }
+    serviceClient.detail.forEach((d) => {
+      if (d._id.equals(taskId)) {
+        d.datefin = now;
+        d.is_finished = true;
+      }
+    });
+    await serviceClient.save();
+    res.json({ message: "Service términé avec succès", updatedAt: now });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/task-today/:mechanicId", async (req, res) => {
+  try {
+    const idMechanic = req.params.mechanicId;
+    const today = new Date();
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+    const tasks = await serviceClients.find({
+      "detail.idmechanic": idMechanic,
+    });
+    const details = await Promise.all(
+      tasks.map(async (task) => {
+        const filteredDetails = task.detail
+          .filter(
+            (d) =>
+              d.idmechanic.equals(idMechanic) &&
+              d.is_finished === true &&
+              d.datedebut &&
+              (new Date(d.datedebut) >= startOfDay ||
+                new Date(d.datedebut) <= endOfDay)
+          )
+          .map(async (d) => {
+            const getService = await service.findById(d.idservice);
+            const mechanic = await emp.findById(d.idmechanic);
+            return new Task(
+              d._id,
+              getService,
+              mechanic,
+              d.prix,
+              d.datedebut,
+              d.datefin,
+              d.is_finished
+            );
+          });
+        return await Promise.all(filteredDetails);
+      })
+    );
+    res.json(details.flat());
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
