@@ -48,6 +48,9 @@ const servicesClientSchema = new mongoose.Schema(
         },
         datefin: { 
           type: Date,  
+        },
+        is_finished: {
+          type: Boolean
         }
       }
     ]
