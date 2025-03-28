@@ -1,187 +1,235 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const serviceClients=require('../../models/client/servicesClient');
-const emp=require('../../models/emp/emp');
-const {RULE}=require('../../data/RULE');
-const auth= require('../../midelewares/manager');
-const { Types } = require('mongoose');
-const InvoiceData = require('../../models/client/invoice');
-const easyinvoice = require('easyinvoice');
-const {  sendValidationEmailWithInvoice } = require('../../routes/email/mailer');
+const serviceClients = require("../../models/client/servicesClient");
+const emp = require("../../models/emp/emp");
+const { RULE } = require("../../data/RULE");
+const auth = require("../../midelewares/manager");
+const InvoiceData = require("../../models/client/invoice");
+const easyinvoice = require("easyinvoice");
+const { sendValidationEmailWithInvoice } = require("../../routes/email/mailer");
+const service = require("../../models/service");
+const Task = require("../../dtos/task");
 
+router.get("/facture-service/:id", async (req, res) => {
+  try {
+    const invoice = new InvoiceData(); // Crée une nouvelle instance d'InvoiceData
+    const clientDetails = await serviceClients
+      .findById(req.params.id)
+      .populate("idcustomer", "name firstName login")
+      .populate("idcarcustomer")
+      .populate({
+        path: "detail.idservice",
+        select: "name",
+      })
+      .populate({
+        path: "detail.idmechanic",
+        select: "name firstName",
+      });
 
-router.get('/facture-service/:id', async (req, res) => {
-    try {
-        const invoice = new InvoiceData();  // Crée une nouvelle instance d'InvoiceData
-        const clientDetails = await serviceClients.findById(req.params.id)
-            .populate("idcustomer", "name firstName login") 
-            .populate("idcarcustomer") 
-            .populate({
-                path: "detail.idservice",
-                select: "name",
-            })
-            .populate({
-                path: "detail.idmechanic",
-                select: "name firstName", 
-            });
-
-        // Vérifie si clientDetails et ses propriétés existent avant de les utiliser
-        if (!clientDetails || !clientDetails.idcustomer) {
-            return res.status(404).json({ message: "Client non trouvé" });
-        }
-       
-        invoice.client.company = `${clientDetails.idcustomer.name} ${clientDetails.idcustomer.firstName}`;
-        invoice.invoiceNumber = req.params.id;
-        invoice.invoiceDate = new Date();
-
-       
-        invoice.products = clientDetails.detail.map(value => {
-            return {
-                quantity: 1,
-                description: value.idservice.name,
-                tax: 20,
-                price: value.prix
-            };
-        });
-
-        
-        const result = await easyinvoice.createInvoice(invoice);    
-
-        sendValidationEmailWithInvoice(clientDetails.idcustomer.login,`${clientDetails.idcustomer.name} ${clientDetails.idcustomer.firstName}`,req.params.id,Buffer.from(result.pdf, 'base64'))
-    } catch (error) {
-        // Gestion des erreurs
-        res.status(500).json({ message: error.message });
+    // Vérifie si clientDetails et ses propriétés existent avant de les utiliser
+    if (!clientDetails || !clientDetails.idcustomer) {
+      return res.status(404).json({ message: "Client non trouvé" });
     }
+
+    invoice.client.company = `${clientDetails.idcustomer.name} ${clientDetails.idcustomer.firstName}`;
+    invoice.invoiceNumber = req.params.id;
+    invoice.invoiceDate = new Date();
+
+    invoice.products = clientDetails.detail.map((value) => {
+      return {
+        quantity: 1,
+        description: value.idservice.name,
+        tax: 20,
+        price: value.prix,
+      };
+    });
+
+    const result = await easyinvoice.createInvoice(invoice);
+
+    sendValidationEmailWithInvoice(
+      clientDetails.idcustomer.login,
+      `${clientDetails.idcustomer.name} ${clientDetails.idcustomer.firstName}`,
+      req.params.id,
+      Buffer.from(result.pdf, "base64")
+    );
+  } catch (error) {
+    // Gestion des erreurs
+    res.status(500).json({ message: error.message });
+  }
 });
 
+router.get("/service-in-progress", async (req, res) => {
+  try {
+    const values = await serviceClients
+      .find({
+        $and: [{ "detail.datefin": null }, { datedebut: { $ne: null } }],
+      })
+      .populate("idcustomer", "name firstName picture")
+      .populate("idcarcustomer", "picture brand model")
+      .populate({ path: "detail.idservice", select: "name" })
+      .populate({
+        path: "detail.idmechanic",
+        select: "name firstName picture",
+      });
 
-router.get('/service-in-progress', async (req, res) => {
-    try {
-        const values = await serviceClients.find({
-            $and: [
-                { "detail.datefin": null }, 
-                { "datedebut": { $ne: null } } 
-            ]
-        })
-        .populate("idcustomer", "name firstName picture") 
-        .populate("idcarcustomer", "picture brand model")
-        .populate({ path: "detail.idservice", select: "name" }) 
-        .populate({ path: "detail.idmechanic", select: "name firstName picture" }) ;
-
-        res.json(values);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    res.json(values);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-router.get('/service-in-waiting', async (req, res) => {
-    try {
-        const values = await serviceClients.find({
-            "datedebut": { $eq: null }
-        })
-        .populate("idcustomer", "name firstName picture") 
-        .populate("idcarcustomer", "picture brand model")
-        .populate({ path: "detail.idservice", select: "name" }) 
-        .populate({ path: "detail.idmechanic", select: "name firstName picture" }) ;
+router.get("/service-in-waiting", async (req, res) => {
+  try {
+    const values = await serviceClients
+      .find({
+        datedebut: { $eq: null },
+      })
+      .populate("idcustomer", "name firstName picture")
+      .populate("idcarcustomer", "picture brand model")
+      .populate({ path: "detail.idservice", select: "name" })
+      .populate({
+        path: "detail.idmechanic",
+        select: "name firstName picture",
+      });
 
-        res.json(values);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    res.json(values);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-router.get('/free-mechanic', async (req, res) => {
-    try {
-        const values = await serviceClients.aggregate([
-            { $unwind: "$detail" }, 
-            { $match: { "detail.datefin": null } }, 
-            { $group: { _id: "$detail.idmechanic" } }, 
-            { $project: { _id: 1 } } 
-          ]);
-        let mechanic = await emp.find(
-            { rule:RULE[2]._id }, 
-            { _id: 1, name: 1, firstName: 1, picture: 1 } 
-        );
-        const set2 = new Set(values.map(item => item._id.toString())); 
-        
-        mechanic = mechanic.filter(item => !set2.has(item._id.toString()));
-        
-        res.json(mechanic);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+router.get("/free-mechanic", async (req, res) => {
+  try {
+    const values = await serviceClients.aggregate([
+      { $unwind: "$detail" },
+      { $match: { "detail.datefin": null } },
+      { $group: { _id: "$detail.idmechanic" } },
+      { $project: { _id: 1 } },
+    ]);
+    let mechanic = await emp.find(
+      { rule: RULE[2]._id },
+      { _id: 1, name: 1, firstName: 1, picture: 1 }
+    );
+    const set2 = new Set(values.map((item) => item._id.toString()));
+
+    mechanic = mechanic.filter((item) => !set2.has(item._id.toString()));
+
+    res.json(mechanic);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-router.post('/',async (req, res) => {
-    try {
-        const values = new serviceClients(req.body);
-        await values.save();
-        res.status(201).json(values);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+router.post("/", async (req, res) => {
+  try {
+    const values = new serviceClients(req.body);
+    await values.save();
+    res.status(201).json(values);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
-router.get('/', async (req, res) => {
-    try {
-        const values = await serviceClients.find()
-            .populate("idcustomer","name firstName") 
-            .populate("idcarcustomer") 
-            .populate({
-                path: "detail.idservice",
-                select: "name",
-            })
-            .populate({
-                path: "detail.idmechanic",
-                select: "name firstName", 
-            });
-        res.json(values);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-router.get('/:id/:skip/:limit',auth, async (req, res) => {
-    try {
-        const skip = parseInt(req.params.skip, 10) || 0;
-        const limit = parseInt(req.params.limit, 10) || 10;
-        const values = await serviceClients.find()
-            .populate("idcustomer","name firstName") 
-            .populate("idcarcustomer") 
-            .populate({
-                path: "detail.idservice",
-                select: "name",
-            })
-            .populate({
-                path: "detail.idmechanic",
-                select: "name firstName", 
-            })
-            .skip(skip)
-            .limit(limit);
-
-        res.json(values);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+router.get("/", async (req, res) => {
+  try {
+    const values = await serviceClients
+      .find()
+      .populate("idcustomer", "name firstName")
+      .populate("idcarcustomer")
+      .populate({
+        path: "detail.idservice",
+        select: "name",
+      })
+      .populate({
+        path: "detail.idmechanic",
+        select: "name firstName",
+      });
+    res.json(values);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
+router.get("/:id/:skip/:limit", auth, async (req, res) => {
+  try {
+    const skip = parseInt(req.params.skip, 10) || 0;
+    const limit = parseInt(req.params.limit, 10) || 10;
+    const values = await serviceClients
+      .find()
+      .populate("idcustomer", "name firstName")
+      .populate("idcarcustomer")
+      .populate({
+        path: "detail.idservice",
+        select: "name",
+      })
+      .populate({
+        path: "detail.idmechanic",
+        select: "name firstName",
+      })
+      .skip(skip)
+      .limit(limit);
 
-router.put('/:id',auth, async (req, res) => {
-    try {
-        const value = await serviceClients.findByIdAndUpdate(req.params.id,
-        req.body, { new: true });
-        res.json(value);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+    res.json(values);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-router.delete('/:id',auth, async (req, res) => {
-    try {
-        await serviceClients.findByIdAndDelete(req.params.id);
-        res.json({ message: "value  delete " });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+router.put("/:id", auth, async (req, res) => {
+  try {
+    const value = await serviceClients.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(value);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    await serviceClients.findByIdAndDelete(req.params.id);
+    res.json({ message: "value  delete " });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/task/:mechanicId", async (req, res) => {
+  try {
+    const idMechanic = req.params.mechanicId;
+    const tasks = await serviceClients.find({
+      "detail.idmechanic": idMechanic,
+    });
+    const details = await Promise.all(
+      tasks.map(async (task) => {
+        const filteredDetails = task.detail
+          .filter(
+            (d) => d.idmechanic.equals(idMechanic) && d.is_finished === false
+          )
+          .map(async (d) => {
+            const getService = await service.findById(d.idservice);
+            const mechanic = await emp.findById(d.idmechanic);
+            return new Task(
+              d._id,
+              getService,
+              mechanic,
+              d.prix,
+              d.datedebut,
+              d.datefin,
+              d.is_finished
+            );
+          });
+        return await Promise.all(filteredDetails);
+      })
+    );
+    const flatDetails = details.flat();
+    res.json(flatDetails);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 module.exports = router;
