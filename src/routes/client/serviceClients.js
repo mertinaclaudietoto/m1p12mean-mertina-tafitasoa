@@ -232,4 +232,26 @@ router.get("/task/:mechanicId", async (req, res) => {
   }
 });
 
+router.get("/task-start/:taskId", async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const now = new Date();
+    const serviceClient = await serviceClients.findOne({
+      "detail._id": taskId,
+    });
+    if (!serviceClient) {
+      return res.status(404).json({ message: "Tâche non trouvée" });
+    }
+    serviceClient.detail.forEach((d) => {
+      if (d._id.equals(taskId)) {
+        d.datedebut = now;
+      }
+    });
+    await serviceClient.save();
+    res.json({ message: "Service démarré avec succès", updatedAt: now });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
