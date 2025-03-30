@@ -9,6 +9,7 @@ const easyinvoice = require("easyinvoice");
 const { sendValidationEmailWithInvoice } = require("../../routes/email/mailer");
 const service = require("../../models/service");
 const Task = require("../../dtos/task");
+const carCustomer = require("../../models/client/carCostumer");
 
 router.get("/facture-service/:id", async (req, res) => {
   try {
@@ -197,6 +198,39 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
+router.get("/task-detail/:id", async (req, res) => {
+  try {
+    const serviceCustomer = await serviceClients.findOne({
+      "detail._id": req.params.id,
+    });
+    if (!serviceCustomer) {
+      return res.status(404).json({ message: "Détail non trouvé" });
+    }
+    const car = await carCustomer.findById(serviceCustomer.idcarcustomer);
+    const taskDetail = serviceCustomer.detail.find(
+      (d) => d._id.toString() === req.params.id
+    );
+    if (!taskDetail) {
+      return res.status(404).json({ message: "Détail non trouvé" });
+    }
+    const getService = await service.findById(taskDetail.idservice);
+    const mechanic = await emp.findById(taskDetail.idmechanic);
+    const task = new Task(
+      taskDetail._id,
+      getService,
+      mechanic,
+      car,
+      taskDetail.prix,
+      taskDetail.datedebut,
+      taskDetail.datefin,
+      taskDetail.is_finished
+    );
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.get("/task/:mechanicId", async (req, res) => {
   try {
     const idMechanic = req.params.mechanicId;
@@ -205,6 +239,7 @@ router.get("/task/:mechanicId", async (req, res) => {
     });
     const details = await Promise.all(
       tasks.map(async (task) => {
+        const car = await carCustomer.findById(task.idcarcustomer);
         const filteredDetails = task.detail
           .filter(
             (d) => d.idmechanic.equals(idMechanic) && d.is_finished === false
@@ -216,6 +251,7 @@ router.get("/task/:mechanicId", async (req, res) => {
               d._id,
               getService,
               mechanic,
+              car,
               d.prix,
               d.datedebut,
               d.datefin,
@@ -288,6 +324,7 @@ router.get("/task-today/:mechanicId", async (req, res) => {
     });
     const details = await Promise.all(
       tasks.map(async (task) => {
+        const car = await carCustomer.findById(task.idcarcustomer);
         const filteredDetails = task.detail
           .filter(
             (d) =>
@@ -304,6 +341,7 @@ router.get("/task-today/:mechanicId", async (req, res) => {
               d._id,
               getService,
               mechanic,
+              car,
               d.prix,
               d.datedebut,
               d.datefin,
@@ -314,6 +352,41 @@ router.get("/task-today/:mechanicId", async (req, res) => {
       })
     );
     res.json(details.flat());
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/all-task-mechanic/:mechanicId", async (req, res) => {
+  try {
+    const idMechanic = req.params.mechanicId;
+    const tasks = await serviceClients.find({
+      "detail.idmechanic": idMechanic,
+    });
+    const details = await Promise.all(
+      tasks.map(async (task) => {
+        const car = await carCustomer.findById(task.idcarcustomer);
+        const filteredDetails = task.detail
+          .filter((d) => d.idmechanic.equals(idMechanic))
+          .map(async (d) => {
+            const getService = await service.findById(d.idservice);
+            const mechanic = await emp.findById(d.idmechanic);
+            return new Task(
+              d._id,
+              getService,
+              mechanic,
+              car,
+              d.prix,
+              d.datedebut,
+              d.datefin,
+              d.is_finished
+            );
+          });
+        return await Promise.all(filteredDetails);
+      })
+    );
+    const flatDetails = details.flat();
+    res.json(flatDetails);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
