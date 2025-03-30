@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const privateKey = require('../auth/private_key')
-const { RULEDATA } = require('../data/Ruledata');
+const { RULEDATA } = require('../data/RULE');
 const {_checkCondition} = require('../services/Validation');
 module.exports = (req, res, next) => {
   const authorizationHeader = req.headers.authorization

@@ -5,7 +5,7 @@ const Emp=require('../../models/emp/emp');
 const { Types } = require('mongoose');
 const jwt=require("jsonwebtoken");
 const privateKey = require('../../auth/private_key');
-const sendValidationEmail=require('./mailer');
+const { sendValidationEmail } = require('./mailer');
 
 router.post('/',async (req, res) => {
    const token = jwt.sign( {...req.body},privateKey,{expiresIn:'24h'});

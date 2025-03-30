@@ -25,5 +25,36 @@ const sendValidationEmail = async (to, token) => {
     console.error('Erreur lors de l\'envoi de l\'email:', error);
   }
 };
+const sendValidationEmailWithInvoice = async (to, clientName,invoiceNumber, pdfBuffer) => {
+  try {
+    // Configuration de l'email avec les pièces jointes
+    const mailOptions = {
+      from: process.env.EMAIL_USER,  // Ton email de l'expéditeur
+      to,  // L'email du destinataire
+      subject: 'Votre Facture de GARAGE N-TSIKA pour votre services',
+      html: `
+        <p>Bonjour ${clientName},</p>
+        <p>Nous vous remercions pour votre achat ! Vous trouverez ci-joint la facture correspondant à votre commande.</p>
+        <p><strong>Numéro de la facture : ${invoiceNumber}</strong></p>
+        <p>Merci de faire confiance à notre entreprise. Nous espérons vous revoir bientôt pour de nouvelles services !</p>
+        <p>Cordialement,</p>
+        <p><strong>L'équipe de GARAGE N-TSIKA </strong></p>
+        <p><em>Si vous avez des questions, n'hésitez pas à nous contacter.</em></p>`,
+      attachments: [
+        {
+          filename: 'facture.pdf',  
+          content: pdfBuffer,  
+          encoding: 'base64' 
+        }
+      ]
+    };
+    // Envoi de l'email
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email envoyé :', info.response);
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi de l\'email:', error);
+  }
+};
+
 // Exporte la fonction
-module.exports = sendValidationEmail;
+module.exports = {sendValidationEmail,sendValidationEmailWithInvoice};
