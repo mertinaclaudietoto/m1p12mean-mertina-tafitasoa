@@ -9,8 +9,197 @@ const Emp = require("../models/emp/emp");
 const Rule = require("../models/emp/rule");
 const Sex = require("../models/emp/sex");
 const serviceClient = require("../models/client/servicesClient");
+const service01 = require("../models/services/service01");
+const serviceCar = require("../models/services/carService");
+
 
 const DEFAULTDATA = [
+  {
+    model:serviceCar,
+    data:[
+      {
+        _id: new Types.ObjectId("000000000000000000000001"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370839/v6i2qbqoop6v3vnjcsll.jpg",
+        brandandmodel: "Toyota Corolla 2025",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000002"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742368832/hxjrgpovi9zas9ryulzf.jpg",
+        brandandmodel: "Ford Focus 2024",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000003"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369018/traijeaxmocfs9ulmpj5.jpg",
+        brandandmodel: "BMW X5 2023",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000004"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369252/dgsxtleelfvxfypm0xa1.jpg",
+        brandandmodel: "Mercedes A-Class 2022",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000010"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369601/cmgmzwm9kqqqhimtos8k.jpg",
+        brandandmodel: "Audi A6 2021",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000005"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742369768/wa7vzo3rzcogakspjt5l.jpg",
+        brandandmodel: "Nissan Leaf 2020",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000006"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370179/f0d3rovywplehuengeky.jpg",
+        brandandmodel: "Chevrolet Camaro 2019",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000007"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370532/p1dpixplhvgyae4dt6gj.jpg",
+        brandandmodel: "Volkswagen Golf 2018",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000008"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370619/rfbv1zbqkpiektceuzcu.jpg",
+        brandandmodel: "Porsche 911 2017",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      },
+      {
+        _id: new Types.ObjectId("000000000000000000000009"),
+        picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370724/hmdjcgho32mioy8hb8r2.jpg",
+        brandandmodel: "Ferrari 488 GTB 2016",
+        servicelist: [
+          {
+            idservice: new Types.ObjectId("000000000000000000000001"),
+            price: 5000,
+            time: 3
+          },
+          {
+            idservice: new Types.ObjectId("000000000000000000000002"),
+            price: 7000,
+            time: 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    model: service01,
+    data: [
+      {_id: new Types.ObjectId("000000000000000000000001"), name: "Vidange d'huile"},
+      {_id: new Types.ObjectId("000000000000000000000002"),name: "Réparation de freins"},
+      { _id: new Types.ObjectId("000000000000000000000003"),name: "Changement de pneus"},
+      {_id: new Types.ObjectId("000000000000000000000004"),name: "Diagnostic électronique"},
+      {_id: new Types.ObjectId("000000000000000000000005"),name: "Entretien du moteur"},
+      {_id: new Types.ObjectId("000000000000000000000006"),name: "Réparation de carrosserie"},
+      ],
+  },
   {
     model: CarType,
     data: [

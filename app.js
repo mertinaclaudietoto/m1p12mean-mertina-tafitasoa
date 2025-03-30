@@ -18,6 +18,10 @@ const validateMailRoutes = require("./src/routes/email/validate");
 const sexRoutes = require("./src/routes/emp/Sex");
 const carCostumerRoutes = require("./src/routes/carcostumer");
 const serviceClientRoutes = require("./src/routes/client/serviceClients");
+const service01Routes = require("./src/routes/service/serice01");
+const serviceCarRoutes = require("./src/routes/service/servicecar");
+
+
 
 app.use(bodyParser.json());
 app.use(
@@ -51,6 +55,12 @@ app.use("/api/register", validateMailRoutes);
 app.use("/api/sexs", sexRoutes);
 app.use("/api/car-costumers", carCostumerRoutes);
 app.use("/api/services-client", serviceClientRoutes);
+app.use("/api/service01", service01Routes);
+app.use("/api/servicecars", serviceCarRoutes);
+
+
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
