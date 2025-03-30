@@ -7,6 +7,15 @@ const privateKey = require('../../auth/private_key');
 const hasPassword = require('../../midelewares/hashpassword');
 const { Types } = require('mongoose');  
 
+router.get('/findbyrule/:id', async (req, res) => {
+    try {
+        const values = await Emp.find({rule:new Types.ObjectId(req.params.id)})
+        res.json(values);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.get('/nbrcostumers/:id', async (req, res) => {
     try {
         const values = await Emp.countDocuments({rule:new Types.ObjectId(req.params.id)})
