@@ -20,6 +20,8 @@ const carCostumerRoutes = require("./src/routes/carcostumer");
 const serviceClientRoutes = require("./src/routes/client/serviceClients");
 const service01Routes = require("./src/routes/service/serice01");
 const serviceCarRoutes = require("./src/routes/service/servicecar");
+const serviceCostumerRoutes = require("./src/routes/service/serviceCostumer");
+
 
 
 
@@ -57,6 +59,7 @@ app.use("/api/car-costumers", carCostumerRoutes);
 app.use("/api/services-client", serviceClientRoutes);
 app.use("/api/service01", service01Routes);
 app.use("/api/servicecars", serviceCarRoutes);
+app.use("/api/servicecostumers", serviceCarRoutes);
 
 
 
