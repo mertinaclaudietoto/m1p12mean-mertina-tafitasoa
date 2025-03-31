@@ -1,49 +1,115 @@
 const express = require("express");
 const router = express.Router();
-const Service = require("../../models/services/serviceCostumer");
+const serviceCostumer = require("../../models/services/serviceCostumer");
+
 router.post("/", async (req, res) => {
   try {
-    const service = new Service(req.body);
-    await service.save();
-    res.status(201).json(service);
+    const serviceCostumers = req.body;
+    for (let serviceCostumer of serviceCostumers) {
+      if (!serviceCostumer.idcostumer) {
+        return res
+          .status(400)
+          .json({ error: "idcostumer is required for all service costumers." });
+      }
+    }
+    const insertedServiceCostumers = await serviceCostumer.insertMany(
+      serviceCostumers
+    );
+    res.status(201).json(insertedServiceCostumers);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 });
 
+// Get all service costumers
 router.get("/", async (req, res) => {
   try {
-    const service = await Service.find()
-                        .populate('idcostumer','name fistName')
-                        .populate('idmechanic','name fistName')
-                        .populate({
-                            path: "service.idservice",
-                            select: "name",
-                        });
-                        res.json(service);
+    const serviceCostumers = await serviceCostumer
+      .find()
+      .populate(
+        "idcostumer serviceList.idmechanic serviceList.service.idservice"
+      );
+    res.json(serviceCostumers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get all service costumers active
+router.get("/active", async (req, res) => {
+  try {
+    const activeServiceCostumers = await serviceCostumer
+      .find({ etats: 0 })
+      .populate(
+        "idcostumer serviceList.idmechanic serviceList.service.idservice"
+      );
+    res.json(activeServiceCostumers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get a single service costumer by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const serviceCostumerById = await serviceCostumer
+      .findById(req.params.id)
+      .populate(
+        "idcostumer serviceList.idmechanic serviceList.service.idservice"
+      );
+    if (!serviceCostumerById)
+      return res.status(404).json({ error: "Service costumer not found" });
+    res.json(serviceCostumerById);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Update a service costumer by ID
+router.put("/:id", async (req, res) => {
+  try {
+    const serviceCostumerById = await serviceCostumer
+      .findById(req.params.id)
+      .populate(
+        "idcostumer serviceList.idmechanic serviceList.service.idservice"
+      );
+    if (!serviceCostumerById) {
+      return res.status(404).json({ error: "Service costumer not found" });
+    }
+    if (serviceCostumerById.etats !== 0) {
+      return res.status(400).json({ error: "Service déjà validé" });
+    }
+    await serviceCostumer.findByIdAndDelete(req.params.id);
+    const serviceCostumers = req.body;
+    for (let serviceCostumer of serviceCostumers) {
+      if (!serviceCostumer.idcostumer) {
+        return res
+          .status(400)
+          .json({ error: "idcostumer is required for all service costumers." });
+      }
+    }
+    const newServiceCostumer = await serviceCostumer.insertMany(
+      serviceCostumers
+    );
+    res.status(201).json(newServiceCostumer);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const updatedServiceCostumer = await serviceCostumer.findByIdAndUpdate(
+      req.params.id,
+      { $set: { etats: 1 } },
+      { new: true, runValidators: true }
+    );
+    if (!updatedServiceCostumer)
+      return res.status(404).json({ error: "Service costumer not found" });
+    res.json({ message: "Service costumer marked as deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-router.put("/:id", async (req, res) => {
-  try {
-    const service = await Service.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.json(service);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-router.delete("/:id", async (req, res) => {
-    
-  try {
-    await Service.findByIdAndDelete(req.params.id);
-    console.log(req.params.id)
-    res.json({ message: "Service delete with sucess " });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 module.exports = router;
