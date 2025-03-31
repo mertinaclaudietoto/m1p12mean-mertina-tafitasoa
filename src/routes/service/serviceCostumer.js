@@ -76,7 +76,7 @@ router.put("/:id", async (req, res) => {
     if (!serviceCostumerById) {
       return res.status(404).json({ error: "Service costumer not found" });
     }
-    if (serviceCostumerById.etats !== 0) {
+    if (serviceCostumerById.etats == 10) {
       return res.status(400).json({ error: "Service déjà validé" });
     }
     await serviceCostumer.findByIdAndDelete(req.params.id);
@@ -99,13 +99,22 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const updatedServiceCostumer = await serviceCostumer.findByIdAndUpdate(
+    const serviceCostumerById = await serviceCostumer
+      .findById(req.params.id)
+      .populate(
+        "idcostumer serviceList.idmechanic serviceList.service.idservice"
+      );
+    if (!serviceCostumerById) {
+      return res.status(404).json({ error: "Service costumer not found" });
+    }
+    if (serviceCostumerById.etats == 10) {
+      return res.status(400).json({ error: "Service déjà validé" });
+    }
+    await serviceCostumer.findByIdAndUpdate(
       req.params.id,
       { $set: { etats: 1 } },
       { new: true, runValidators: true }
     );
-    if (!updatedServiceCostumer)
-      return res.status(404).json({ error: "Service costumer not found" });
     res.json({ message: "Service costumer marked as deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
