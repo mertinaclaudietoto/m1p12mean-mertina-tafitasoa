@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const privateKey = require('../auth/private_key')
-const { RULEDATA } = require('../data/RULE');
+const { RULE } = require('../data/RULE');
 const {_checkCondition} = require('../services/Validation');
 
 module.exports = (req, res, next) => {
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
         }
         const userId = decodedToken.userId
         const idrule = decodedToken.idrule;
-        let value= _checkCondition(res,req.body.userId,req.body.idrule,userId,idrule,RULEDATA[2]._id);
+        let value= _checkCondition(res,req.body.userId,req.body.idrule,userId,idrule,RULE[2]._id);
         if(value!=null){
             return value;
         }

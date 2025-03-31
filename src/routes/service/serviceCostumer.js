@@ -3,20 +3,34 @@ const router = express.Router();
 const serviceCostumer = require("../../models/services/serviceCostumer");
 const { sendValidationAppointment } = require("../email/mailer");
 
+router.get("/story/:idcostumer", async (req, res) => {
+  try {
+    const skip = parseInt(req.query.skip) || 0; 
+    const limit = parseInt(req.query.limit) || 10;
+    const serviceCostumers = await serviceCostumer.find({ idcostumer: req.params.idcostumer })
+    .populate(
+      "idcostumer serviceList.idmechanic serviceList.service.idservice"
+    ).skip(skip)
+    .limit(limit);
+    res.json(serviceCostumers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 router.post("/", async (req, res) => {
   try {
+    // console.log(req.body);
     const serviceCostumers = req.body;
-    for (let serviceCostumer of serviceCostumers) {
-      if (!serviceCostumer.idcostumer) {
-        return res
-          .status(400)
-          .json({ error: "idcostumer is required for all service costumers." });
-      }
+    if (!serviceCostumers.idcostumer) {
+      return res
+        .status(400)
+        .json({ error: "idcostumer is required for all service costumers." });
     }
-    const insertedServiceCostumers = await serviceCostumer.insertMany(
-      serviceCostumers
-    );
-    res.status(201).json(insertedServiceCostumers);
+    const service = new serviceCostumer(serviceCostumers);     
+    await service.save();
+    res.status(201).json(service);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -69,6 +83,7 @@ router.get("/:id", async (req, res) => {
 // Update a service costumer by ID
 router.put("/:id", async (req, res) => {
   try {
+    // console.log(req.body);
     const serviceCostumerById = await serviceCostumer
       .findById(req.params.id)
       .populate(
@@ -83,19 +98,10 @@ router.put("/:id", async (req, res) => {
     if (serviceCostumerById.etats !== 0) {
       return res.status(400).json({ error: "Service en cours de traitement." });
     }
-    await serviceCostumer.findByIdAndDelete(req.params.id);
-    const serviceCostumers = req.body;
-    for (let serviceCostumer of serviceCostumers) {
-      if (!serviceCostumer.idcostumer) {
-        return res
-          .status(400)
-          .json({ error: "idcostumer is required for all service costumers." });
-      }
-    }
-    const newServiceCostumer = await serviceCostumer.insertMany(
-      serviceCostumers
-    );
-    res.status(201).json(newServiceCostumer);
+    const service = await serviceCostumer.findByIdAndUpdate(req.params.id,req.body, {
+          new: true,
+    });
+    res.status(201).json(service);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

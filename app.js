@@ -38,7 +38,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connecté");
-    clearAndInsertData(DEFAULTDATA);
+    // clearAndInsertData(DEFAULTDATA);
   })
   .catch((err) => console.log(err));
 

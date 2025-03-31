@@ -26,6 +26,9 @@ const serviceCostumerSchema = new mongoose.Schema({
       startdate: { type: Date, default: null },
       enddate: { type: Date, default: null },
       nbrstars: { type: Number, default: null },
+      idcar: { type: String, default: null },
+      brandandmodel: { type: String, default: null },
+      picture: { type: String, default: null },
     },
   ],
 });
