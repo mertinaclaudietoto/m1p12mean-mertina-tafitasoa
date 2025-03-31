@@ -38,7 +38,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connecté");
-    // clearAndInsertData(DEFAULTDATA);
+    clearAndInsertData(DEFAULTDATA);
   })
   .catch((err) => console.log(err));
 
@@ -59,7 +59,7 @@ app.use("/api/car-costumers", carCostumerRoutes);
 app.use("/api/services-client", serviceClientRoutes);
 app.use("/api/service01", service01Routes);
 app.use("/api/servicecars", serviceCarRoutes);
-app.use("/api/servicecostumers", serviceCarRoutes);
+app.use("/api/servicecostumers", serviceCostumerRoutes);
 
 
 

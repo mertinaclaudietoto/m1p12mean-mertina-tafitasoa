@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const serviceCostumer = require("../../models/services/serviceCostumer");
+const { sendValidationAppointment } = require("../email/mailer");
 
 router.post("/", async (req, res) => {
   try {
@@ -76,8 +77,11 @@ router.put("/:id", async (req, res) => {
     if (!serviceCostumerById) {
       return res.status(404).json({ error: "Service costumer not found" });
     }
-    if (serviceCostumerById.etats == 10) {
-      return res.status(400).json({ error: "Service déjà validé" });
+    if (serviceCostumerById.etats == 1) {
+      return res.status(400).json({ error: "Service est supprimé" });
+    }
+    if (serviceCostumerById.etats !== 0) {
+      return res.status(400).json({ error: "Service en cours de traitement." });
     }
     await serviceCostumer.findByIdAndDelete(req.params.id);
     const serviceCostumers = req.body;
@@ -107,8 +111,11 @@ router.delete("/:id", async (req, res) => {
     if (!serviceCostumerById) {
       return res.status(404).json({ error: "Service costumer not found" });
     }
-    if (serviceCostumerById.etats == 10) {
-      return res.status(400).json({ error: "Service déjà validé" });
+    if (serviceCostumerById.etats == 1) {
+      return res.status(400).json({ error: "Service déjà annulé" });
+    }
+    if (serviceCostumerById.etats !== 0) {
+      return res.status(400).json({ error: "Service en cours de traitement." });
     }
     await serviceCostumer.findByIdAndUpdate(
       req.params.id,
@@ -116,6 +123,53 @@ router.delete("/:id", async (req, res) => {
       { new: true, runValidators: true }
     );
     res.json({ message: "Service costumer marked as deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.put("/accept/:id", async (req, res) => {
+  try {
+    const serviceCostumerById = await serviceCostumer
+      .findById(req.params.id)
+      .populate(
+        "idcostumer serviceList.idmechanic serviceList.service.idservice"
+      );
+    if (!serviceCostumerById) {
+      return res.status(404).json({ error: "Service costumer not found" });
+    }
+    if (serviceCostumerById.etats == 1) {
+      return res.status(400).json({ error: "Service est supprimé" });
+    }
+    await serviceCostumer.findByIdAndUpdate(
+      req.params.id,
+      { $set: { etats: 20 } },
+      { new: true, runValidators: true }
+    );
+    res.json({ message: "Service costumer accepter" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/send-appointment/:id", async (req, res) => {
+  try {
+    const serviceCostumerById = await serviceCostumer
+      .findById(req.params.id)
+      .populate(
+        "idcostumer serviceList.idmechanic serviceList.service.idservice"
+      );
+    if (!serviceCostumerById)
+      return res.status(404).json({ error: "Service costumer not found" });
+    sendValidationAppointment(
+      "tafitasoaratsimbaha@gmail.com",
+      serviceCostumerById.idcostumer.name +
+        " " +
+        serviceCostumerById.idcostumer.firstName,
+      "12-04-2025 15:30",
+      "huhu.com"
+    );
+    res.json({ message: "Rendez-vous envoyé avec succès" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
