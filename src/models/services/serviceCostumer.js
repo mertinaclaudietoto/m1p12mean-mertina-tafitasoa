@@ -1,23 +1,33 @@
-const mongoose = require('mongoose');
-const Emp = require('../emp/emp'); 
-const Service01 = require('./service01'); 
+const mongoose = require("mongoose");
 
 const serviceCostumerSchema = new mongoose.Schema({
-  idcostumer: { type: mongoose.Schema.Types.ObjectId, ref: 'Emp', required: true },
-  etats:{ type: Number, required: true },
+  idcostumer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Emp",
+    required: true,
+  },
+  etats: { type: Number, default: 0 },
   serviceList: [
     {
-      idmechanic: { type: mongoose.Schema.Types.ObjectId, ref: 'Emp', required: true },
+      idmechanic: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Emp",
+        default: null,
+      },
       service: {
-        idservice: { type: mongoose.Schema.Types.ObjectId, ref: "Service01", required: true },
+        idservice: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Service01",
+          required: true,
+        },
         price: { type: Number, required: true },
         time: { type: Number, required: true },
       },
-      startdate: { type: Date, required: true },
-      enddate: { type: Date, required: true },
-      nbrstars: { type: Number, required: true }, 
-    }
-  ]
+      startdate: { type: Date, default: null },
+      enddate: { type: Date, default: null },
+      nbrstars: { type: Number, default: null },
+    },
+  ],
 });
-const model = mongoose.model('Servicecostumer', serviceCostumerSchema);
+const model = mongoose.model("Servicecostumer", serviceCostumerSchema);
 module.exports = model;
