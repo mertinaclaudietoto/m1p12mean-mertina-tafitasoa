@@ -44,7 +44,15 @@ router.get('/', async (req, res) => {
     }
 });
 
-
+router.get('/:id', async (req, res) => {
+    try {
+        const values = await Emp.findById(req.params.id)
+        .populate('skills')
+        res.json(values);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 router.put('/:id', async (req, res) => {
     try {

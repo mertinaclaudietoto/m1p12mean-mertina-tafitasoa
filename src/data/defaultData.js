@@ -402,25 +402,6 @@ const DEFAULTDATA = [
         ],
       },
       {
-        _id: new Types.ObjectId("000000000000000000000005"),
-        picture:
-          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742470163/pjpkq8fmvhobr26xpgui.jpg",
-        name: "Leclerc",
-        firstName: "Maxime",
-        dateofbirth: "1988-02-20",
-        dateofemp: "2012-01-12",
-        login: "leclercmaxime@gmail.com",
-        password:
-          "$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
-        rule: new Types.ObjectId("000000000000000000000002"),
-        sex: new Types.ObjectId("000000000000000000000001"),
-        skills: [
-          new Types.ObjectId("000000000000000000000001"),
-          new Types.ObjectId("000000000000000000000002"),
-          new Types.ObjectId("000000000000000000000003"),
-        ],
-      },
-      {
         _id: new Types.ObjectId("000000000000000000000006"),
         picture:
           "http://res.cloudinary.com/dcufspbrh/image/upload/v1742470163/pjpkq8fmvhobr26xpgui.jpg",
