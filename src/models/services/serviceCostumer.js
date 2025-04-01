@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const serviceCostumerSchema = new mongoose.Schema({
   idcostumer: {
     type: mongoose.Schema.Types.ObjectId,

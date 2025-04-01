@@ -2,6 +2,57 @@ const express = require("express");
 const router = express.Router();
 const serviceCostumer = require("../../models/services/serviceCostumer");
 const { sendValidationAppointment } = require("../email/mailer");
+const InvoiceData = require("../../models/client/invoice");
+const { sendValidationEmailWithInvoice } = require("../../routes/email/mailer");
+
+const easyinvoice = require("easyinvoice");
+const emp = require('../../models/emp/emp');
+router.put("/facture/:id", async (req, res) => {
+  try {
+   
+    const serviceCostumerById = await serviceCostumer
+      .findById(req.params.id)
+      .populate(
+        "idcostumer serviceList.idmechanic serviceList.service.idservice"
+      );
+    if (!serviceCostumerById) {
+      return res.status(404).json({ error: "Service costumer not found" });
+    }
+    if (serviceCostumerById.etats == 1) {
+      return res.status(400).json({ error: "Service est supprimé" });
+    }
+    if (serviceCostumerById.etats !== 0) {
+      return res.status(400).json({ error: "Service en cours de traitement." });
+    }
+    const service = await serviceCostumer.findByIdAndUpdate(req.params.id,req.body, {
+          new: true,
+    });
+   
+    const invoice = new InvoiceData(); 
+    invoice.client.company = `${serviceCostumerById.idcostumer.name} ${serviceCostumerById.idcostumer.firstName}`;
+    invoice.invoiceNumber = serviceCostumerById._id;
+    invoice.invoiceDate = new Date();
+    invoice.products = serviceCostumerById.serviceList.map((value) => {
+      return {
+        quantity: 1,
+        description: value.service.idservice.name,
+        tax: 20,
+        price: value.service.price,
+      };
+    });
+    const result = await easyinvoice.createInvoice(invoice);
+
+    sendValidationEmailWithInvoice(
+      serviceCostumerById.idcostumer.login,
+      `${serviceCostumerById.idcostumer.name} ${serviceCostumerById.idcostumer.firstName}`,
+      serviceCostumerById._id,
+      Buffer.from(result.pdf, "base64")
+    );
+    res.status(201).json(service);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 router.get("/story/:idcostumer", async (req, res) => {
   try {

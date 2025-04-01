@@ -10,10 +10,9 @@ const { sendValidationEmailWithInvoice } = require("../../routes/email/mailer");
 const service = require("../../models/service");
 const Task = require("../../dtos/task");
 const carCustomer = require("../../models/client/carCostumer");
-
 router.get("/facture-service/:id", async (req, res) => {
   try {
-    const invoice = new InvoiceData(); // Crée une nouvelle instance d'InvoiceData
+    const invoice = new InvoiceData(); 
     const clientDetails = await serviceClients
       .findById(req.params.id)
       .populate("idcustomer", "name firstName login")
