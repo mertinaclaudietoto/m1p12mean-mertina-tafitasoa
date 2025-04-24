@@ -9,6 +9,29 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const sendLogin = async (to, login,password) => {
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to,
+      subject: "Accueil en tant qu'employée de Garage N'tsika",
+      html: `
+        <p>Bonjour et bienvenue chez <strong>Garage N'tsika</strong> !</p>
+        <p>Nous sommes ravis de vous accueillir dans notre équipe.</p>
+        <p>Voici vos informations de connexion :</p>
+        <ul>
+          <li><strong>Identifiant (login)</strong> : ${login}</li>
+          <li><strong>Mot de passe</strong> : ${password}</li>
+        </ul>
+      `
+    };
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email envoyé :", info.response);
+  } catch (error) {
+    console.error("Erreur lors de l'envoi de l'email:", error);
+  }
+};
+
 // Fonction pour envoyer un email de validation
 const sendValidationEmail = async (to, token) => {
   try {
@@ -94,4 +117,5 @@ module.exports = {
   sendValidationEmail,
   sendValidationEmailWithInvoice,
   sendValidationAppointment,
+  sendLogin
 };

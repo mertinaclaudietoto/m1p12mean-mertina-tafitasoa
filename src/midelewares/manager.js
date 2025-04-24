@@ -1,24 +1,20 @@
 const jwt = require('jsonwebtoken')
 const privateKey = require('../auth/private_key')
 const {RULE } = require('../data/RULE');
-const {_checkCondition} = require('../services/Validation');
+const {_checkCondition,verifToken} = require('../services/Validation');
+const ApiResponse= require('../models/apiResponse/ApiResponse');
+
 module.exports = (req, res, next) => {
-    const authorizationHeader = req.headers.authorization
-    if(!authorizationHeader) {
-        const message = `Vous n'avez pas fourni de jeton d'authentification. Ajoutez-en un dans l'en-tête de la requête.`
-        return res.status(401).json({ message })
-    }
+    const authorizationHeader =verifToken(req);
     const token = authorizationHeader.split(' ')[1]
     const decodedToken = jwt.verify(token, privateKey, (error, decodedToken) => {
         if(error) {
-            const message = `L'utilisateur n'est pas autorisé à accèder à cette ressource.`
-            return res.status(401).json({ message, data: error })
+            return res.status(401).json(ApiResponse.error(`Eroor 401  `,[{ message: 
+                `The user is not authorized to access this resource.`
+                }]));
         }
-        const userId = decodedToken.userId
         const idrule = decodedToken.idrule;
-        
-        let value= _checkCondition(res,req.body.userId,req.body.idrule,userId,idrule,RULE[0]._id.toString());
-        
+        let value= _checkCondition(res,idrule,RULE.manager.toString());
         if(value!=null){
             return value;
         }

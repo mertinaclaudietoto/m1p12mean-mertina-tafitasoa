@@ -1,12 +1,183 @@
 const express = require("express");
 const router = express.Router();
-const serviceCostumer = require("../../models/services/serviceCostumer");
+const serviceCostumer = require("../../models/costumer/serviceCostumer");
 const { sendValidationAppointment } = require("../email/mailer");
-const InvoiceData = require("../../models/client/invoice");
+const InvoiceData = require("../../models/costumer/invoice");
 const { sendValidationEmailWithInvoice } = require("../../routes/email/mailer");
-
 const easyinvoice = require("easyinvoice");
 const emp = require('../../models/emp/emp');
+const ApiResponse= require('../../models/apiResponse/ApiResponse');
+const {notifNewTacheMechanic,notifAfterRequestServiceCostumeur} = require('../../routes/notification/sendNotificationToAll');
+router.get("/service-detaille/:id", async (req, res) => {
+  try {
+    const result = await serviceCostumer.findById(req.params.id)
+        .populate({
+          path: "idcostumer",
+          select: "name firstname",
+        })
+        .populate({
+          path: "serviceList.idmechanic",
+          select: "name firstname",
+        })
+        .populate({
+          path: "serviceList.service.idservice",
+          select: "name",
+        });
+    return res.status(200).json(ApiResponse.success(`Select avarage time with average-time `,result));
+  } catch (error) {
+    return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
+  }
+});
+
+router.get("/etats-service/:etats", async (req, res) => {
+  try {
+    const values = await serviceCostumer.find({etats: req.params.etats})
+      .populate("idcostumer", "name firstName picture")
+    return res.status(200).json(ApiResponse.success(`Select waiting service`,values));
+  } catch (error) {
+    return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
+  }
+});
+
+router.get("/revenue/month", async (req, res) => {
+  try {
+    const result = await serviceCostumer.aggregate([
+      { $unwind: "$serviceList" },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m", date: "$serviceList.startdate" },
+          },
+          total: { $sum: "$serviceList.service.price" },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    return res.status(200).json(ApiResponse.success(`Select revenu by month `,result));
+  } catch (error) {
+    return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
+  }
+});
+
+router.get("/revenue/day", async (req, res) => {
+  try {
+    const result = await serviceCostumer.aggregate([
+      { $unwind: "$serviceList" },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m-%d", date: "$serviceList.startdate" },
+          },
+          total: { $sum: "$serviceList.service.price" },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    return res.status(200).json(ApiResponse.success(`Select revenu by days `,result));
+  } catch (error) {
+    return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
+  }
+});
+
+router.get("/reservations/month", async (req, res) => {
+  try {
+    const result = await serviceCostumer.aggregate([
+      { $unwind: "$serviceList" },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m", date: "$serviceList.startdate" },
+          },
+          total: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    return res.status(200).json(ApiResponse.success(`Select reservations by month `,result));
+  } catch (error) {
+    return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
+  }
+});
+
+router.get("/reservations/day", async (req, res) => {
+  try {
+    const result = await serviceCostumer.aggregate([
+      { $unwind: "$serviceList" },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m-%d", date: "$serviceList.startdate" },
+          },
+          total: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    return res.status(200).json(ApiResponse.success(`Select reservations by day `,result));
+  } catch (error) {
+    return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
+  }
+});
+
+router.get("/average-time", async (req, res) => {
+  try {
+    const result = await serviceCostumer.aggregate([
+      { $unwind: "$serviceList" },
+      { $match: { "serviceList.idmechanic": { $ne: null } } },
+      {
+        $group: {
+          _id: "$serviceList.idmechanic",
+          totalTime: { $sum: "$serviceList.service.time" },
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          mechanicId: "$_id",
+          averageTime: { $divide: ["$totalTime", "$count"] },
+        },
+      },
+      {
+        $lookup: {
+          from: "emps", // nom de la collection MongoDB des employés
+          localField: "mechanicId",
+          foreignField: "_id",
+          as: "mechanicInfo",
+        },
+      },
+      {
+        $unwind: "$mechanicInfo",
+      },
+      {
+        $project: {
+          mechanicId: 1,
+          averageTime: 1,
+          name: "$mechanicInfo.name",
+          firstname: "$mechanicInfo.firstName",
+          picture: "$mechanicInfo.picture",
+        },
+      }
+    ]);
+    return res.status(200).json(ApiResponse.success(`Select avarage time with average-time `,result));
+  } catch (error) {
+    return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
+  }
+});
+
 router.put("/facture/:id", async (req, res) => {
   try {
    
@@ -16,13 +187,19 @@ router.put("/facture/:id", async (req, res) => {
         "idcostumer serviceList.idmechanic serviceList.service.idservice"
       );
     if (!serviceCostumerById) {
-      return res.status(404).json({ error: "Service costumer not found" });
+      return res.status(404).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+        "Service costumer not found"
+      }]));
     }
     if (serviceCostumerById.etats == 1) {
-      return res.status(400).json({ error: "Service est supprimé" });
+      return res.status(400).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+        "Service deleted"
+      }]));
     }
     if (serviceCostumerById.etats !== 0) {
-      return res.status(400).json({ error: "Service en cours de traitement." });
+      return res.status(404).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+        "Service being processedd"
+      }]));
     }
     const service = await serviceCostumer.findByIdAndUpdate(req.params.id,req.body, {
           new: true,
@@ -48,9 +225,12 @@ router.put("/facture/:id", async (req, res) => {
       serviceCostumerById._id,
       Buffer.from(result.pdf, "base64")
     );
-    res.status(201).json(service);
+    return res.status(201).json(ApiResponse.success(`success`,service));
+
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
   }
 });
 
@@ -63,9 +243,11 @@ router.get("/story/:idcostumer", async (req, res) => {
       "idcostumer serviceList.idmechanic serviceList.service.idservice"
     ).skip(skip)
     .limit(limit);
-    res.json(serviceCostumers);
+    return res.status(201).json(ApiResponse.success(`success`,serviceCostumers));
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+      error.message
+    }]));
   }
 });
 
@@ -82,6 +264,7 @@ router.post("/", async (req, res) => {
     const service = new serviceCostumer(serviceCostumers);     
     await service.save();
     res.status(201).json(service);
+    notifAfterRequestServiceCostumeur();
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -135,26 +318,35 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     // console.log(req.body);
+
     const serviceCostumerById = await serviceCostumer
       .findById(req.params.id)
       .populate(
         "idcostumer serviceList.idmechanic serviceList.service.idservice"
       );
     if (!serviceCostumerById) {
-      return res.status(404).json({ error: "Service costumer not found" });
+      return res.status(400).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+        "Service client no trouver"
+      }]));
     }
-    if (serviceCostumerById.etats == 1) {
-      return res.status(400).json({ error: "Service est supprimé" });
-    }
-    if (serviceCostumerById.etats !== 0) {
-      return res.status(400).json({ error: "Service en cours de traitement." });
-    }
+    // if (serviceCostumerById.etats == 1) {
+    //   return res.status(400).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+    //     "Service client no trouver"
+    //   }]));
+    // }
+    // if (serviceCostumerById.etats !== 0) {
+    //   return res.status(400).json({ error: "Service en cours de traitement." });
+    // }
     const service = await serviceCostumer.findByIdAndUpdate(req.params.id,req.body, {
           new: true,
     });
-    res.status(201).json(service);
+    notifNewTacheMechanic();
+    return res.status(201).json(ApiResponse.success(`Modification fait avec succes `,service));
+
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json(ApiResponse.error(`Eroor 400  `,[{ message: 
+      error.message
+    }]));
   }
 });
 

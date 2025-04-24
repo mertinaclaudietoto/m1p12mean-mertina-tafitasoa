@@ -19,6 +19,7 @@
     "dotenv": "^16.4.7",
     "easyinvoice": "^3.0.11",
     "express": "^4.21.2",
+    "firebase-admin": "^13.2.0",
     "garage-backend-app": "file:",
     "imap": "^0.8.17",
     "imap-simple": "^1.6.3",
@@ -35,5 +36,4 @@
     "node": "22.x",
     "npm": "10.x"
   }
-
 }

@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const serviceClients = require("../../models/client/servicesClient");
+const serviceClients = require("../../models/costumer/servicesClient");
 const emp = require("../../models/emp/emp");
 const { RULE } = require("../../data/RULE");
 const auth = require("../../midelewares/manager");
-const InvoiceData = require("../../models/client/invoice");
+const InvoiceData = require("../../models/costumer/invoice");
 const easyinvoice = require("easyinvoice");
 const { sendValidationEmailWithInvoice } = require("../../routes/email/mailer");
 const service = require("../../models/service");
 const Task = require("../../dtos/task");
-const carCustomer = require("../../models/client/carCostumer");
+const carCustomer = require("../../models/costumer/carCostumer");
 router.get("/facture-service/:id", async (req, res) => {
   try {
     const invoice = new InvoiceData(); 

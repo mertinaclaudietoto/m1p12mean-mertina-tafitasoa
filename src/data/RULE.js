@@ -1,7 +1,8 @@
 const { Types } = require('mongoose'); 
-const RULE = [
-    { _id: new Types.ObjectId("000000000000000000000001"), name: "Manager" },
-    { _id: new Types.ObjectId("000000000000000000000002"), name: "Costumer" },
-    { _id: new Types.ObjectId("000000000000000000000003"), name: "Mechanic" },
-];
+const RULE = {
+    manager:new Types.ObjectId("000000000000000000000001"),
+    costumer:new Types.ObjectId("000000000000000000000002"),
+    mechanic:new Types.ObjectId("000000000000000000000003")
+}
 module.exports = { RULE };
+
