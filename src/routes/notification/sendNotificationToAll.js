@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('./../../config/m1p12-mean-mertina-tafitasoa-firebase-adminsdk-fbsvc-de917c4a05.json');
+const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
 const tokenFCM=require('../../models/notification/tokenFCM');
 const { RULE } = require('../../data/RULE');
 
