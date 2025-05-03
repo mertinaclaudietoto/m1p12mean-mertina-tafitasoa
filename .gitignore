@@ -1,6 +1,3 @@
 node_modules/
 .env
 
-src/config/*.json
-
-src/config/m1p12-mean-mertina-tafitasoa-firebase-adminsdk-fbsvc-de917c4a05.json
