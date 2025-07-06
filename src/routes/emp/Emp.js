@@ -65,7 +65,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: error.message }]));
     }
 });
-
+// modif on entite
 router.put('/:id', async (req, res) => {
     try {
         const values = await Emp.findByIdAndUpdate(req.params.id,
@@ -74,6 +74,29 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: error.message }]));
     }
+});
+// modif credit card information
+router.put('/put-creditcard/:id', async (req, res) => {
+  try {
+    const creditCardUpdate = req.body.creditCard;
+    // Vérifier si creditCard est présent dans le corps de la requête
+    if (!creditCardUpdate) {
+      return res.status(400).json(ApiResponse.error("Aucune information de carte fournie."));
+    }
+
+    const updatedEmp = await Emp.findByIdAndUpdate(
+      req.params.id,
+      { creditCard: creditCardUpdate },
+      { new: true, runValidators: true }
+    );
+   
+    if (!updatedEmp) {
+        return res.json(ApiResponse.error(`Aucun employé trouvé avec l'ID ${req.params.id}`, updatedEmp));
+    }
+    res.json(ApiResponse.success(`Mise à jour réussie pour ${req.params.id}`, updatedEmp));
+  } catch (error) {
+    res.status(500).json(ApiResponse.error("Erreur serveur", [{ message: error.message }]));
+  }
 });
 
 router.delete('/:id', async (req, res) => {

@@ -15,7 +15,7 @@ const DEFAULTDATA = [
         picture: "http://res.cloudinary.com/dcufspbrh/image/upload/v1742370839/v6i2qbqoop6v3vnjcsll.jpg",
         brandandmodel: "Toyota Corolla 2025",
         servicelist: [
-          { idservice: new Types.ObjectId("000000000000000000000001"),price: 5000,time: 60,commission:1000},
+          {idservice: new Types.ObjectId("000000000000000000000001"),price: 5000,time: 60,commission:1000},
           {idservice: new Types.ObjectId("000000000000000000000002"),price: 7000,time: 5,commission:2000}
         ]
       },
@@ -116,21 +116,6 @@ const DEFAULTDATA = [
   {
     model: Emp,
     data: [
-      {
-        _id: new Types.ObjectId("000000000000000000000001"),
-        picture:
-          "http://res.cloudinary.com/dcufspbrh/image/upload/v1742469815/ljdaexb0aj28bjeg0kjn.jpg",
-        name: "Dupont",
-        firstName: "Pierre",
-        dateofbirth: "1990-01-01",
-        dateofemp: "2015-03-15",
-        login: "dupontprierre@gmail.com",
-        password:
-          "$2b$10$9scdzPACJsEvw.lxxjF.eO2HfaKLUFdxI824pFxDqiq105Cj32Smu",
-        rule: new Types.ObjectId("000000000000000000000003"),
-        sex: new Types.ObjectId("000000000000000000000001"),
-        active:1
-      },
       {
         _id: new Types.ObjectId("000000000000000000000002"),
         picture:
