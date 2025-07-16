@@ -2,6 +2,7 @@ const { Types } = require("mongoose");
 const Emp = require("../models/emp/emp");
 const Rule = require("../models/emp/rule");
 const Sex = require("../models/emp/sex");
+const Chat = require("../models/chat/Chat");
 const ServiceCostumer = require("../models/costumer/serviceCostumer");
 const service01 = require("../models/services/service01");
 const serviceCar = require("../models/services/carService");
@@ -180,8 +181,8 @@ const DEFAULTDATA = [
         _id: new Types.ObjectId("000000000000000000000006"),
         picture:
           "http://res.cloudinary.com/dcufspbrh/image/upload/v1742470163/pjpkq8fmvhobr26xpgui.jpg",
-        name: "Leclerc",
-        firstName: "Maxime",
+        name: "TOTO",
+        firstName: "Mertina Claudie",
         dateofbirth: "1988-02-20",
         dateofemp: "2012-01-12",
         login: "mertinaclaudietoto@gmail.com",
@@ -381,6 +382,35 @@ const DEFAULTDATA = [
           },
         ],
       },
+    ],
+  },
+   {
+    model: Chat,
+    data: [
+      {
+        sender: "000000000000000000000006",
+        receiver: "000000000000000000000005",
+        content: "Salut, tu es disponible pour la réunion ?",
+        timestamp: "2025-07-06T09:30:00.000Z",
+        isRead: true,
+        islastMessage:false
+      },
+      {
+      sender: "000000000000000000000005",
+      receiver: "000000000000000000000006",
+      content: "oui je le suis",
+      timestamp: "2025-07-06T09:31:00.000Z",
+      isRead: false,
+      islastMessage:true
+    },
+    {
+      sender: "000000000000000000000004",
+      receiver: "000000000000000000000006",
+      content: "Bonjour madane je suis arriver",
+      timestamp: "2025-07-06T09:31:00.000Z",
+      isRead: false,
+      islastMessage:true
+    },
     ],
   },
 ];

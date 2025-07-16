@@ -8,7 +8,18 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 const cors = require("cors");
+const socketIO = require('socket.io');
+const http = require('http');
 const app = express();
+const server = http.createServer(app);
+const io = socketIO(server); 
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+const cors = require("cors");
+
+
 const { clearAndInsertData } = require("./src/data/CLEARANDINSERTDATA");
 const { DEFAULTDATA } = require("./src/data/DEFAULTDATA");
 const empRoutes = require("./src/routes/emp/Emp");
@@ -20,7 +31,7 @@ const service01Routes = require("./src/routes/service/serice01");
 const serviceCarRoutes = require("./src/routes/service/servicecar");
 const serviceCostumerRoutes = require("./src/routes/service/serviceCostumer");
 const TokenFCMRoutes = require("./src/routes/notification/TokenFCM");
-
+const chat = require("./src/routes/chat/Chat");
 
 app.use(bodyParser.json());
 app.use(
@@ -42,6 +53,22 @@ mongoose
 app.get("/", async (req, res) => {
   console.log("hello heroku");
 });
+
+// 🔌 Socket.IO
+io.on('connection', (socket) => {
+  console.log('Un client connecté : ' + socket.id);
+
+  // Rejoindre une salle unique pour un utilisateur (par ID)
+  socket.on('join', (userId) => {
+    socket.join(userId);
+  });
+
+  // Déconnexion
+  socket.on('disconnect', () => {
+    console.log('Un client s’est déconnecté');
+  });
+});
+
 app.use("/api/emps", empRoutes);
 app.use("/api/rules", ruleRoutes);
 app.use("/api/register", validateMailRoutes);
@@ -50,9 +77,14 @@ app.use("/api/service01", service01Routes);
 app.use("/api/servicecars", serviceCarRoutes);
 app.use("/api/servicecostumers", serviceCostumerRoutes);
 app.use("/api/tokenFCM", TokenFCMRoutes);
+app.use("/api/chats", chat);
+
+
+
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
 });
 
+module.exports = { app, server, io };

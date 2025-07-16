@@ -7,7 +7,8 @@ const privateKey = require('../../auth/private_key');
 const hasPassword = require('../../midelewares/hashpassword');
 const { Types } = require('mongoose');  
 const {sendLogin}=require('../../routes/email/mailer')
-const ApiResponse= require('../../models/apiResponse/ApiResponse')
+const ApiResponse = require('../../models/apiResponse/ApiResponse');
+
 router.get('/findbyrule/:id', async (req, res) => {
     try {
         const values = await Emp.find({rule:new Types.ObjectId(req.params.id)})
@@ -30,6 +31,15 @@ router.get('/nbrcostumers/:id', async (req, res) => {
     try {
         const values = await Emp.countDocuments({rule:new Types.ObjectId(req.params.id)})
         res.json(ApiResponse.success(`Numbers of costumers `,values));
+    } catch (error) {
+        res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: error.message }]));
+    }
+});
+
+router.get('/selectchat', async (req, res) => {
+    try {
+        const values = await Emp.find({}).select('name firstName picture');
+        res.json(ApiResponse.success(`get liste chat `,values));
     } catch (error) {
         res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: error.message }]));
     }
@@ -107,31 +117,67 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: error.message }]));
     }
 });
-router.post('/login',async (req, res) => {
-    Emp.findOne({ login: req.body.login }).then(user => {
-        // console.log(user)
-        if(!user){
-            const message= "User not found";
-            return res.status(400).json({ message,column:0 })
+router.get('/deconnection/:id', async (req, res) => {
+  try {
+    await Emp.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          isConnected: false,
+          lastConnection: new Date() // ou Date.now() si tu préfères un timestamp
         }
-        if(user.active==0){
-           return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 'connexion not authorized' }]));
-        }
-      bcrypt.compare(req.body.password, user.password).then(isPasswordValid => {
-        if(!isPasswordValid){
-            const message= "False passWord";
-            return res.status(400).json({ message,column:1 })
-        }
-        const token = jwt.sign(
-            {userId:user._id,idrule:user.rule._id},
-            privateKey,
-            {expiresIn:'24h'}
-        )
-        if(isPasswordValid) {
-            return res.json(ApiResponse.success(`Login success  `,{picture: user.picture,iduser:user._id,idrule:user.rule._id,token }));
-        }
-      })
-    })
-})
+      }
+    );
+
+    return res.json(ApiResponse.success('Déconnexion réussie', {}));
+  } catch (error) {
+    return res.status(500).json(ApiResponse.error('Erreur 500', [{ message: error.message }]));
+  }
+});
+
+router.post('/login', async (req, res) => {
+  try {
+    const user = await Emp.findOne({ login: req.body.login }).populate('rule');
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found', column: 0 });
+    }
+
+    if (user.active === 0) {
+      return res.status(403).json(ApiResponse.error('Connexion not authorized', [{ message: 'Inactive account' }]));
+    }
+
+    const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: 'False password', column: 1 });
+    }
+
+    // Générer un token JWT
+    const token = jwt.sign(
+      { userId: user._id, idrule: user.rule._id },
+      privateKey,
+      { expiresIn: '24h' }
+    );
+
+    // Mettre à jour la connexion
+    await Emp.findByIdAndUpdate(user._id, {
+      $set: {
+        isConnected: true,
+        lastConnection: new Date()
+      }
+    });
+
+    return res.json(ApiResponse.success('Login success', {
+      picture: user.picture,
+      iduser: user._id,
+      idrule: user.rule._id,
+      token
+    }));
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json(ApiResponse.error('Erreur serveur', [{ message: error.message }]));
+  }
+});
 
 module.exports = router;

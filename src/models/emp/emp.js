@@ -46,6 +46,8 @@ const EmpSchema = new mongoose.Schema({
   rule:{ type: mongoose.Schema.Types.ObjectId, ref: 'Rule', required: true },
   password: {type: String,required: true,},
   active: { type: Number, required: true },
+  isConnected: { type: Boolean, default: false },
+  lastConnection: { type: Date, default: null },
   creditCard: {
     type: CreditCardSchema,
     required: false,
