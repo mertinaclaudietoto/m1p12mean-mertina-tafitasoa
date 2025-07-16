@@ -3,7 +3,43 @@ const router = express.Router();
 const Service = require("../../models/services/service01");
 const serviceCar = require("../../models/services/carService");
 const authmanager=require("../../midelewares/manager");
-
+const ApiResponse= require('../../models/apiResponse/ApiResponse');
+router.get("/ensemble-service-by-car", async (req, res) => {
+  try {
+    console.log(parseInt(req.query.skip))
+    const skip = parseInt(req.query.skip) || 0; 
+    const limit = parseInt(req.query.limit) || 10;
+    const service = await serviceCar.find()
+      .populate({
+            path: "servicelist.idservice",
+            selct:"name"
+      })
+      .skip(skip)
+      .limit(limit); 
+    let new_format =[]
+    service.forEach(value => {
+      let description = '';
+      let price = 0;
+      let time = 0;
+      value.servicelist.forEach(list => {
+        description +=  + list.idservice.name +' '+list.price+' ar ,';
+        price += list.price;
+        time += list.time;
+      })
+      new_format.push({
+        picture:value.picture,
+        _id: value._id, nameofcar: value.brandandmodel,
+      description,price,time
+      })
+    })
+    
+      res.json(ApiResponse.success(`List of garage service `,new_format));
+    } catch (error) {
+      return res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: 
+        error.message
+      }]));
+    }
+});
 
 router.get("/rows/", async (req, res) => {
     try {

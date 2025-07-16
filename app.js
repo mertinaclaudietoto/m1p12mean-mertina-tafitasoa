@@ -14,12 +14,6 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server); 
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-const cors = require("cors");
-
-
 const { clearAndInsertData } = require("./src/data/CLEARANDINSERTDATA");
 const { DEFAULTDATA } = require("./src/data/DEFAULTDATA");
 const empRoutes = require("./src/routes/emp/Emp");

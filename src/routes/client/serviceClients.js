@@ -10,6 +10,8 @@ const { sendValidationEmailWithInvoice } = require("../../routes/email/mailer");
 const service = require("../../models/service");
 const Task = require("../../dtos/task");
 const carCustomer = require("../../models/costumer/carCostumer");
+
+
 router.get("/facture-service/:id", async (req, res) => {
   try {
     const invoice = new InvoiceData(); 

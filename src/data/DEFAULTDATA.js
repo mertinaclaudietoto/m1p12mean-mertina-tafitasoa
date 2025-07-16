@@ -6,7 +6,6 @@ const Chat = require("../models/chat/Chat");
 const ServiceCostumer = require("../models/costumer/serviceCostumer");
 const service01 = require("../models/services/service01");
 const serviceCar = require("../models/services/carService");
-
 const DEFAULTDATA = [
   {
     model:serviceCar,
