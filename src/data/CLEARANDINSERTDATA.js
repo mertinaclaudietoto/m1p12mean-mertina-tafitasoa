@@ -1,7 +1,7 @@
 async function clearAndInsertData(models) {
   try {
     for (const { model, data } of models) {
-      // await model.deleteMany({});
+      await model.deleteMany({});
       await model.collection.drop();
       // console.log(model)
       await model.insertMany(data);

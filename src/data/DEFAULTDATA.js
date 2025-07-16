@@ -1,6 +1,7 @@
 const { Types } = require("mongoose");
 const Emp = require("../models/emp/emp");
 const Rule = require("../models/emp/rule");
+const Opinion = require("../models/costumer/opinion");
 const Sex = require("../models/emp/sex");
 const Chat = require("../models/chat/Chat");
 const ServiceCostumer = require("../models/costumer/serviceCostumer");
@@ -412,5 +413,21 @@ const DEFAULTDATA = [
     },
     ],
   },
+   {
+    model: Opinion,
+    data: [
+      { costumer: new Types.ObjectId("000000000000000000000006"), message: "Très bon service, rapide et efficace. Le personnel est accueillant.",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000002"), message: "Garage professionnel, les réparations ont été faites dans les délais annoncés.",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000003"), message: "Prix raisonnables et excellent diagnostic. Je recommande !",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000002"), message: "Première visite dans ce garage et très satisfait. Le mécanicien a bien pris le temps d’expliquer.",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000003"), message: "Un garage honnête, ce qui devient rare. Pas de mauvaise surprise sur la facture.",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000004"), message: "Accueil chaleureux, service impeccable. Je reviendrai sans hésiter.",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000005"), message: "Réparation rapide et efficace. Mon véhicule roule comme neuf.",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000006"), message: "Très bon rapport qualité-prix. Le patron est très professionnel.",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000002"), message: "Un peu d’attente mais travail bien fait. Personnel compétent.",date:'2023-04-10' },
+      { costumer: new Types.ObjectId("000000000000000000000006"), message: "Je recommande ce garage à 100 %, ils ont sauvé ma voiture juste avant mes vacances.",date:'2023-04-10' }
+    ],
+  },
+  
 ];
 module.exports = { DEFAULTDATA };

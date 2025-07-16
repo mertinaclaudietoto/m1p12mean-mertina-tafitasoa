@@ -26,6 +26,8 @@ const serviceCarRoutes = require("./src/routes/service/servicecar");
 const serviceCostumerRoutes = require("./src/routes/service/serviceCostumer");
 const TokenFCMRoutes = require("./src/routes/notification/TokenFCM");
 const chat = require("./src/routes/chat/Chat");
+const  opinion= require("./src/routes/client/opinion");
+
 
 app.use(bodyParser.json());
 app.use(
@@ -72,13 +74,10 @@ app.use("/api/servicecars", serviceCarRoutes);
 app.use("/api/servicecostumers", serviceCostumerRoutes);
 app.use("/api/tokenFCM", TokenFCMRoutes);
 app.use("/api/chats", chat);
-
-
-
+app.use("/api/opinions", opinion);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
 });
-
 module.exports = { app, server, io };
