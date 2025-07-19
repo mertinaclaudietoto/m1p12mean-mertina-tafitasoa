@@ -14,6 +14,41 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+router.get("/filtre", async (req, res) => {
+    try {
+        const id = req.query.id;
+        
+            const values = id == 'all' ? (
+                await opinion.find()
+                        .populate({
+                            path: 'costumer',
+                            select: 'name firstName picture',
+                        })
+            ) : (await opinion.find({
+                costumer:id})
+                        .populate({
+                            path: 'costumer',
+                            select: 'name firstName picture',
+                        })  )
+        
+        let resulta = [];
+        values.forEach(value => {
+            resulta.push({
+                _id: value.costumer._id,
+                name:  value.costumer.name,
+                firstname: value.costumer.firstName,
+                picture:  value.costumer.picture,
+                message:value.message,
+                date:value.date
+            })
+        })
+        res.json(ApiResponse.success(`Select options `,resulta ));
+    } catch (error) {
+        res.status(500).json(ApiResponse.error(`Eroor 500  `,[{ message: error.message }]));
+    }
+});
+
 router.get("/", async (req, res) => {
     try {
         const skip = parseInt(req.query.skip, 10) || 0;
@@ -54,6 +89,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
+       
         await opinion.findByIdAndDelete(req.params.id);
         res.json(ApiResponse.success(`Delete with success  `,{}));
     } catch (error) {
